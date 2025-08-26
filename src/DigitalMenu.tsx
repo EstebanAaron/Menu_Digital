@@ -14,7 +14,7 @@ import { AnimatePresence, motion } from "framer-motion";
  */
 
 /* ===================== Config del Fondo ===================== */
-const BG_URL = "src/img/11.jpg"; // ← Cambia esta URL por tu imagen
+const BG_URL = "img/11.jpg"; // ← Cambia esta URL por tu imagen
 
 /* ===================== Tipos ===================== */
 type Lang = "es" | "en" | "de" | "fr";

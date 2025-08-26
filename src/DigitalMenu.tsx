@@ -14,8 +14,7 @@ import { AnimatePresence, motion } from "framer-motion";
  */
 
 /* ===================== Config del Fondo ===================== */
-const BG_URL =
-  "https://images.unsplash.com/photo-1541542684-4a1873c1d5f5?q=80&w=1600&auto=format&fit=crop"; // ← Cambia esta URL por tu imagen
+const BG_URL = "src/img/11.jpg"; // ← Cambia esta URL por tu imagen
 
 /* ===================== Tipos ===================== */
 type Lang = "es" | "en" | "de" | "fr";
@@ -318,8 +317,8 @@ function DishCard({
       tabIndex={0}
       onClick={onToggle}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onToggle()}
-      className="relative group rounded-2xl border border-white/50 bg-white/90 p-4 shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      style={{ boxShadow: "0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)" }}
+      className="relative group rounded-2xl border border-white/50 bg-white/90 p-4 shadow-sm ring-1 ring-black/5 transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}
     >
       {/* barra de color por categoría */}
       <div
@@ -447,35 +446,30 @@ export default function DigitalMenu() {
           loading="lazy"
         />
         {/* overlay (ajusta opacidad/color a tu gusto) */}
-        <div className="absolute inset-0 bg-white/65 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-white/20" />
       </div>
 
       {/* ===== Contenido ===== */}
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-8">
         {/* Header */}
         <header className="mb-5 sm:mb-8 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-          <div>
-            <h1 className="text-2xl font-extrabold tracking-tight">
-              {I18N[lang].menuTitle}
-            </h1>
-            <p className="mt-1 text-sm text-gray-700">{I18N[lang].subtitle}</p>
-          </div>
+         
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setAllCats(true)}
-              className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm backdrop-blur hover:bg-white"
+              className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm hover:bg-white"
             >
               {I18N[lang].expandAll}
             </button>
             <button
               onClick={() => setAllCats(false)}
-              className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm backdrop-blur hover:bg-white"
+              className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm hover:bg-white"
             >
               {I18N[lang].collapseAll}
             </button>
 
-            <label className="ml-2 flex items-center gap-2 rounded-xl border border-white/50 bg-white/90 px-3 py-2 shadow-sm backdrop-blur">
+            <label className="ml-2 flex items-center gap-2 rounded-xl border border-white/50 bg-white/90 px-3 py-2 shadow-sm">
               <Globe className="h-4 w-4" aria-hidden />
               <span className="text-sm text-gray-700">{I18N[lang].languageLabel}</span>
               <select
@@ -507,10 +501,10 @@ export default function DigitalMenu() {
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}
-                className="group flex w-full items-center justify-between rounded-xl border border-white/50 bg-white/90 px-4 py-3 shadow-sm backdrop-blur hover:bg-white"
+                className="group flex w-full items-center justify-between rounded-xl border border-white/50 bg-white/90 px-4 py-3 shadow-sm hover:bg-white"
                 style={{
                   boxShadow:
-                    "0 1px 0 rgba(0,0,0,0.02), 0 8px 20px rgba(0,0,0,0.06)",
+                    "0 1px 0 rgba(0,0,0,0.02), 0 2px 8px rgba(0,0,0,0.04)",
                 }}
               >
                 <div className="flex items-center gap-3">

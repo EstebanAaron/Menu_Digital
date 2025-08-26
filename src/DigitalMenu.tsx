@@ -2,7 +2,22 @@ import React, { useEffect, useMemo, useState } from "react";
 import { ChevronDown, Globe } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-// ===== Tipos =====
+/**
+ * DigitalMenu.tsx
+ * - Fondo con IMAGEN (configurable en BG_URL)
+ * - I18N (ES/EN/DE/FR) para textos y categorías
+ * - Auto-detección de idioma + persistencia en localStorage
+ * - Formato € por locale
+ * - Secciones colapsables por CATEGORÍA
+ * - Tarjetas expandibles por PLATO
+ * - Estilos mobile-first con Tailwind (overlay para legibilidad)
+ */
+
+/* ===================== Config del Fondo ===================== */
+const BG_URL =
+  "https://images.unsplash.com/photo-1541542684-4a1873c1d5f5?q=80&w=1600&auto=format&fit=crop"; // ← Cambia esta URL por tu imagen
+
+/* ===================== Tipos ===================== */
 type Lang = "es" | "en" | "de" | "fr";
 type Category = "entrantes" | "carnes" | "pescado" | "postre" | "bebidas";
 
@@ -15,7 +30,7 @@ type Dish = {
   image: string; // URL
 };
 
-// ===== I18N =====
+/* ===================== I18N ===================== */
 const LANG_LABEL: Record<Lang, string> = {
   es: "Español",
   en: "English",
@@ -99,7 +114,7 @@ const I18N: Record<
   },
 };
 
-// ===== Acentos por categoría =====
+/* ===================== Colores por categoría (acentos) ===================== */
 const CAT_COLORS: Record<Category, string> = {
   entrantes: "#14b8a6", // teal-500
   carnes: "#ef4444", // red-500
@@ -108,7 +123,7 @@ const CAT_COLORS: Record<Category, string> = {
   bebidas: "#f59e0b", // amber-500
 };
 
-// ===== Datos (ejemplo) =====
+/* ===================== Datos (ejemplo) ===================== */
 const DISHES: Dish[] = [
   {
     id: "croquetas-jamon",
@@ -122,7 +137,7 @@ const DISHES: Dish[] = [
       fr: "Béchamel onctueuse au jambon ibérique, panées et frites. 6 pièces.",
     },
     image:
-      "https://images.unsplash.com/photo-1617191518009-6e7d36e9fe2e?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1617191518009-6e7d36e9fe2e?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "ensalada-mediterranea",
@@ -136,7 +151,7 @@ const DISHES: Dish[] = [
       fr: "Mesclun, tomate, concombre, olives, feta et vinaigrette au citron.",
     },
     image:
-      "https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "solomillo-parrilla",
@@ -150,7 +165,7 @@ const DISHES: Dish[] = [
       fr: "Filet de bœuf maturé grillé, sel en flocons et huile d'olive vierge extra.",
     },
     image:
-      "https://images.unsplash.com/photo-1604908812837-0b6f64b2c329?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1604908812837-0b6f64b2c329?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "pollo-ajillo",
@@ -164,7 +179,7 @@ const DISHES: Dish[] = [
       fr: "Hauts de cuisse de poulet sautés à l'ail, vin blanc et herbes méditerranéennes.",
     },
     image:
-      "https://images.unsplash.com/photo-1625944525567-c0f7c07e3992?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1625944525567-c0f7c07e3992?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "lubina-plancha",
@@ -178,7 +193,7 @@ const DISHES: Dish[] = [
       fr: "Filet de bar grillé avec légumes et sauce au citron.",
     },
     image:
-      "https://images.unsplash.com/photo-1558036117-15d82a90b9b8?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1558036117-15d82a90b9b8?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "pulpo-gallega",
@@ -192,7 +207,7 @@ const DISHES: Dish[] = [
       fr: "Poulpe tendre au paprika, sel en flocons et huile d'olive sur pommes de terre.",
     },
     image:
-      "https://images.unsplash.com/photo-1625944618284-9b40f13d0a26?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1625944618284-9b40f13d0a26?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "tarta-queso",
@@ -206,7 +221,7 @@ const DISHES: Dish[] = [
       fr: "Cheesecake crémeux cuit, base biscuit et coulis de fruits rouges.",
     },
     image:
-      "https://images.unsplash.com/photo-1541781286675-09d5f62b52dc?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1541781286675-09d5f62b52dc?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "creme-brulee",
@@ -220,7 +235,7 @@ const DISHES: Dish[] = [
       fr: "Classique crème à la vanille avec croûte de sucre caramélisé.",
     },
     image:
-      "https://images.unsplash.com/photo-1514511547114-2b3f5f9fcf2e?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1514511547114-2b3f5f9fcf2e?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "agua-mineral",
@@ -234,7 +249,7 @@ const DISHES: Dish[] = [
       fr: "Eau minérale naturelle, plate ou gazeuse.",
     },
     image:
-      "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "cerveza-artesanal",
@@ -248,7 +263,7 @@ const DISHES: Dish[] = [
       fr: "IPA locale aux notes d'agrumes et finale amère équilibrée.",
     },
     image:
-      "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=1200&auto=format&fit=crop",
   },
   {
     id: "cafe-espresso",
@@ -262,11 +277,11 @@ const DISHES: Dish[] = [
       fr: "Café 100% arabica, extraction courte et crema dense.",
     },
     image:
-      "https://images.unsplash.com/photo-1503481766315-7a586b20f66b?q=80&w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1503481766315-7a586b20f66b?q=80&w=1200&auto=format&fit=crop",
   },
 ];
 
-// ===== Utilidades =====
+/* ===================== Utilidades ===================== */
 function detectDeviceLang(): Lang {
   const supported: Lang[] = ["es", "en", "de", "fr"];
   const pick = (code?: string) => code?.slice(0, 2).toLowerCase();
@@ -283,115 +298,7 @@ function formatEUR(value: number, locale = "es-ES") {
   return new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(value);
 }
 
-// ===== Banderas con efecto ondeo (SVG + filtros) =====
-const CanaryFlagWaving: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    className={className}
-    viewBox="0 0 600 300"
-    preserveAspectRatio="none"
-    aria-hidden
-  >
-    <defs>
-      {/* Efecto tela: ruido y desplazamiento */}
-      <filter id="wave-canary" x="-20%" y="-20%" width="140%" height="140%">
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency="0.008 0.02"
-          numOctaves={2}
-          seed={3}
-          result="noise"
-        >
-          <animate
-            attributeName="baseFrequency"
-            dur="8s"
-            values="0.008 0.02; 0.012 0.03; 0.008 0.02"
-            repeatCount="indefinite"
-          />
-        </feTurbulence>
-        <feDisplacementMap
-          in="SourceGraphic"
-          in2="noise"
-          scale={12}
-          xChannelSelector="R"
-          yChannelSelector="G"
-        />
-      </filter>
-
-      {/* Desvanecido lateral para que no “corte” duro */}
-      <linearGradient id="fade-canary" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stopColor="black" stopOpacity="0" />
-        <stop offset="8%" stopColor="black" stopOpacity="1" />
-        <stop offset="92%" stopColor="black" stopOpacity="1" />
-        <stop offset="100%" stopColor="black" stopOpacity="0" />
-      </linearGradient>
-      <mask id="mask-canary">
-        <rect x="0" y="0" width="600" height="300" fill="url(#fade-canary)" />
-      </mask>
-    </defs>
-
-    <g filter="url(#wave-canary)" mask="url(#mask-canary)">
-      {/* Blanco - Azul - Amarillo (verticales) */}
-      <rect x="0" y="0" width="200" height="300" fill="#ffffff" />
-      <rect x="200" y="0" width="200" height="300" fill="#0057B8" />
-      <rect x="400" y="0" width="200" height="300" fill="#FCD116" />
-    </g>
-  </svg>
-);
-
-const ColombiaFlagWaving: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    className={className}
-    viewBox="0 0 600 300"
-    preserveAspectRatio="none"
-    aria-hidden
-  >
-    <defs>
-      <filter id="wave-col" x="-20%" y="-20%" width="140%" height="140%">
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency="0.008 0.02"
-          numOctaves={2}
-          seed={7}
-          result="noise"
-        >
-          <animate
-            attributeName="baseFrequency"
-            dur="8s"
-            values="0.01 0.02; 0.013 0.03; 0.01 0.02"
-            repeatCount="indefinite"
-          />
-        </feTurbulence>
-        <feDisplacementMap
-          in="SourceGraphic"
-          in2="noise"
-          scale={12}
-          xChannelSelector="R"
-          yChannelSelector="G"
-        />
-      </filter>
-
-      {/* Desvanecido superior/inferior */}
-      <linearGradient id="fade-col" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="black" stopOpacity="0" />
-        <stop offset="10%" stopColor="black" stopOpacity="1" />
-        <stop offset="90%" stopColor="black" stopOpacity="1" />
-        <stop offset="100%" stopColor="black" stopOpacity="0" />
-      </linearGradient>
-      <mask id="mask-col">
-        <rect x="0" y="0" width="600" height="300" fill="url(#fade-col)" />
-      </mask>
-    </defs>
-
-    <g filter="url(#wave-col)" mask="url(#mask-col)">
-      {/* Amarillo (50%) - Azul (25%) - Rojo (25%) */}
-      <rect x="0" y="0" width="600" height="150" fill="#FCD116" />
-      <rect x="0" y="150" width="600" height="75" fill="#003893" />
-      <rect x="0" y="225" width="600" height="75" fill="#CE1126" />
-    </g>
-  </svg>
-);
-
-// ===== Tarjeta de plato =====
+/* ===================== Tarjeta de plato ===================== */
 function DishCard({
   dish,
   lang,
@@ -412,11 +319,9 @@ function DishCard({
       onClick={onToggle}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onToggle()}
       className="relative group rounded-2xl border border-white/50 bg-white/90 p-4 shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      style={{
-        boxShadow: "0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)",
-      }}
+      style={{ boxShadow: "0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)" }}
     >
-      {/* barra de color según categoría */}
+      {/* barra de color por categoría */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-0 top-0 h-1 w-full rounded-t-2xl"
@@ -468,7 +373,7 @@ function DishCard({
   );
 }
 
-// ===== Componente principal =====
+/* ===================== Componente principal ===================== */
 export default function DigitalMenu() {
   const [openCards, setOpenCards] = useState<Set<string>>(new Set());
   const [openCats, setOpenCats] = useState<Set<Category>>(
@@ -532,32 +437,21 @@ export default function DigitalMenu() {
   }, [dishesSorted]);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-white to-white/70">
-      {/* ===== Banderas con ondeo, colocadas en diagonal y tamaño contenido (mobile-first) ===== */}
-      {/* Canarias (arriba, diagonal suave hacia la izquierda) */}
-      <div
-        aria-hidden
-        className="fixed top-3 left-[-10%] w-[130%] h-28 sm:h-32 md:h-36 -rotate-6 z-0"
-        style={{ filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.08))" }}
-      >
-        <CanaryFlagWaving className="w-full h-full" />
+    <div className="relative min-h-screen overflow-x-hidden">
+      {/* ===== Fondo con imagen + overlay para legibilidad ===== */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
+        <img
+          src={BG_URL}
+          alt=""
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+        {/* overlay (ajusta opacidad/color a tu gusto) */}
+        <div className="absolute inset-0 bg-white/65 backdrop-blur-[2px]" />
       </div>
-
-      {/* Colombia (abajo, diagonal suave hacia la derecha) */}
-      <div
-        aria-hidden
-        className="fixed bottom-3 right-[-10%] w-[130%] h-28 sm:h-32 md:h-36 rotate-6 z-0"
-        style={{ filter: "drop-shadow(0 -6px 16px rgba(0,0,0,0.08))" }}
-      >
-        <ColombiaFlagWaving className="w-full h-full" />
-      </div>
-
-      {/* Overlay sutil para legibilidad (permite ver color/ondeo) */}
-      <div className="fixed inset-0 z-10 pointer-events-none bg-white/40 backdrop-blur-[1px]" />
 
       {/* ===== Contenido ===== */}
-      {/* padding-top/bottom para no solapar con las tiras diagonales */}
-      <div className="relative z-20 mx-auto max-w-5xl px-4 sm:px-6 pt-28 pb-28 sm:pt-32 sm:pb-32">
+      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-8">
         {/* Header */}
         <header className="mb-5 sm:mb-8 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
           <div>
@@ -570,18 +464,18 @@ export default function DigitalMenu() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setAllCats(true)}
-              className="rounded-lg border border-white/50 bg-white/80 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm backdrop-blur hover:bg-white"
+              className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm backdrop-blur hover:bg-white"
             >
               {I18N[lang].expandAll}
             </button>
             <button
               onClick={() => setAllCats(false)}
-              className="rounded-lg border border-white/50 bg-white/80 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm backdrop-blur hover:bg-white"
+              className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm backdrop-blur hover:bg-white"
             >
               {I18N[lang].collapseAll}
             </button>
 
-            <label className="ml-2 flex items-center gap-2 rounded-xl border border-white/50 bg-white/80 px-3 py-2 shadow-sm backdrop-blur">
+            <label className="ml-2 flex items-center gap-2 rounded-xl border border-white/50 bg-white/90 px-3 py-2 shadow-sm backdrop-blur">
               <Globe className="h-4 w-4" aria-hidden />
               <span className="text-sm text-gray-700">{I18N[lang].languageLabel}</span>
               <select
@@ -613,7 +507,7 @@ export default function DigitalMenu() {
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}
-                className="group flex w-full items-center justify-between rounded-xl border border-white/50 bg-white/85 px-4 py-3 shadow-sm backdrop-blur hover:bg-white"
+                className="group flex w-full items-center justify-between rounded-xl border border-white/50 bg-white/90 px-4 py-3 shadow-sm backdrop-blur hover:bg-white"
                 style={{
                   boxShadow:
                     "0 1px 0 rgba(0,0,0,0.02), 0 8px 20px rgba(0,0,0,0.06)",

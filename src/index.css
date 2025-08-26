@@ -2,4 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-hero {
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfktTo2icsNepYFXpKN7ZsjHr7SS5fn287cw&s");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* efecto parallax suave */
+}
+
+
 html, body, #root { height: 100%; }

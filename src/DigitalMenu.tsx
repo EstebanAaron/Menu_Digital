@@ -30,7 +30,7 @@ const DISHES: Dish[] = [
       fr: "Béchamel onctueuse au jambon ibérique, panées et frites. 6 pièces.",
     },
     image:
-      "https://images.unsplash.com/photo-1617191518009-6e7d36e9fe2e?q=80&w=1400&auto=format&fit=crop",
+      "https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480/img/recipe/ras/Assets/F9D4BA2E-255F-417A-8C7C-C2DEAFA8B351/Derivates/265B15E9-7DC7-4DE3-9F70-2BD602C54BB1.jpg",
   },
   {
     id: "ensalada-mediterranea",

@@ -99,7 +99,7 @@ const I18N: Record<
   },
 };
 
-// ===== Colores por categoría (acentos visuales) =====
+// ===== Acentos por categoría =====
 const CAT_COLORS: Record<Category, string> = {
   entrantes: "#14b8a6", // teal-500
   carnes: "#ef4444", // red-500
@@ -283,7 +283,115 @@ function formatEUR(value: number, locale = "es-ES") {
   return new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(value);
 }
 
-// ===== Subcomponentes =====
+// ===== Banderas con efecto ondeo (SVG + filtros) =====
+const CanaryFlagWaving: React.FC<{ className?: string }> = ({ className }) => (
+  <svg
+    className={className}
+    viewBox="0 0 600 300"
+    preserveAspectRatio="none"
+    aria-hidden
+  >
+    <defs>
+      {/* Efecto tela: ruido y desplazamiento */}
+      <filter id="wave-canary" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.008 0.02"
+          numOctaves={2}
+          seed={3}
+          result="noise"
+        >
+          <animate
+            attributeName="baseFrequency"
+            dur="8s"
+            values="0.008 0.02; 0.012 0.03; 0.008 0.02"
+            repeatCount="indefinite"
+          />
+        </feTurbulence>
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="noise"
+          scale={12}
+          xChannelSelector="R"
+          yChannelSelector="G"
+        />
+      </filter>
+
+      {/* Desvanecido lateral para que no “corte” duro */}
+      <linearGradient id="fade-canary" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stopColor="black" stopOpacity="0" />
+        <stop offset="8%" stopColor="black" stopOpacity="1" />
+        <stop offset="92%" stopColor="black" stopOpacity="1" />
+        <stop offset="100%" stopColor="black" stopOpacity="0" />
+      </linearGradient>
+      <mask id="mask-canary">
+        <rect x="0" y="0" width="600" height="300" fill="url(#fade-canary)" />
+      </mask>
+    </defs>
+
+    <g filter="url(#wave-canary)" mask="url(#mask-canary)">
+      {/* Blanco - Azul - Amarillo (verticales) */}
+      <rect x="0" y="0" width="200" height="300" fill="#ffffff" />
+      <rect x="200" y="0" width="200" height="300" fill="#0057B8" />
+      <rect x="400" y="0" width="200" height="300" fill="#FCD116" />
+    </g>
+  </svg>
+);
+
+const ColombiaFlagWaving: React.FC<{ className?: string }> = ({ className }) => (
+  <svg
+    className={className}
+    viewBox="0 0 600 300"
+    preserveAspectRatio="none"
+    aria-hidden
+  >
+    <defs>
+      <filter id="wave-col" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.008 0.02"
+          numOctaves={2}
+          seed={7}
+          result="noise"
+        >
+          <animate
+            attributeName="baseFrequency"
+            dur="8s"
+            values="0.01 0.02; 0.013 0.03; 0.01 0.02"
+            repeatCount="indefinite"
+          />
+        </feTurbulence>
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="noise"
+          scale={12}
+          xChannelSelector="R"
+          yChannelSelector="G"
+        />
+      </filter>
+
+      {/* Desvanecido superior/inferior */}
+      <linearGradient id="fade-col" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="black" stopOpacity="0" />
+        <stop offset="10%" stopColor="black" stopOpacity="1" />
+        <stop offset="90%" stopColor="black" stopOpacity="1" />
+        <stop offset="100%" stopColor="black" stopOpacity="0" />
+      </linearGradient>
+      <mask id="mask-col">
+        <rect x="0" y="0" width="600" height="300" fill="url(#fade-col)" />
+      </mask>
+    </defs>
+
+    <g filter="url(#wave-col)" mask="url(#mask-col)">
+      {/* Amarillo (50%) - Azul (25%) - Rojo (25%) */}
+      <rect x="0" y="0" width="600" height="150" fill="#FCD116" />
+      <rect x="0" y="150" width="600" height="75" fill="#003893" />
+      <rect x="0" y="225" width="600" height="75" fill="#CE1126" />
+    </g>
+  </svg>
+);
+
+// ===== Tarjeta de plato =====
 function DishCard({
   dish,
   lang,
@@ -303,10 +411,9 @@ function DishCard({
       tabIndex={0}
       onClick={onToggle}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onToggle()}
-      className="relative group rounded-2xl border border-white/40 bg-white/90 p-4 shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      className="relative group rounded-2xl border border-white/50 bg-white/90 p-4 shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
       style={{
-        boxShadow:
-          "0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)",
       }}
     >
       {/* barra de color según categoría */}
@@ -318,7 +425,7 @@ function DishCard({
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
           <div className="truncate text-lg font-semibold">{dish.name}</div>
-          <div className="mt-1 text-sm text-gray-600">
+          <div className="mt-1 text-sm text-gray-700">
             {I18N[lang].categories[dish.category]}
           </div>
         </div>
@@ -352,7 +459,7 @@ function DishCard({
                   loading="lazy"
                 />
               </div>
-              <p className="leading-relaxed text-gray-700">{description}</p>
+              <p className="leading-relaxed text-gray-800">{description}</p>
             </div>
           </motion.div>
         )}
@@ -403,7 +510,7 @@ export default function DigitalMenu() {
     setOpenCats(open ? new Set(["entrantes", "carnes", "pescado", "postre", "bebidas"]) : new Set());
   };
 
-  // ordenamos por categoría y nombre
+  // orden y agrupado
   const order: Category[] = ["entrantes", "carnes", "pescado", "postre", "bebidas"];
   const dishesSorted = useMemo(
     () =>
@@ -414,7 +521,6 @@ export default function DigitalMenu() {
     []
   );
 
-  // agrupamos por categoría
   const grouped = useMemo(() => {
     return dishesSorted.reduce<Record<Category, Dish[]>>(
       (acc, d) => {
@@ -427,33 +533,30 @@ export default function DigitalMenu() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-white to-white/70">
-      {/* ===== Banderas decorativas fijas (mobile-first). No ocupan toda la altura. ===== */}
-      {/* Canaria (arriba): tira fija con franjas verticales */}
+      {/* ===== Banderas con ondeo, colocadas en diagonal y tamaño contenido (mobile-first) ===== */}
+      {/* Canarias (arriba, diagonal suave hacia la izquierda) */}
       <div
         aria-hidden
-        className="fixed top-0 left-0 right-0 h-24 sm:h-28 md:h-32 z-0"
-        style={{
-          background:
-            "linear-gradient(to right, #ffffff 0 33.33%, #0057B8 33.33% 66.66%, #FCD116 66.66% 100%)",
-          boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-        }}
-      />
-      {/* Colombia (abajo): tira fija con franjas horizontales */}
-      <div
-        aria-hidden
-        className="fixed bottom-0 left-0 right-0 h-24 sm:h-28 md:h-32 z-0"
-        style={{
-          background:
-            "linear-gradient(to bottom, #FCD116 0 50%, #003893 50% 75%, #CE1126 75% 100%)",
-          boxShadow: "0 -4px 16px rgba(0,0,0,0.08)",
-        }}
-      />
+        className="fixed top-3 left-[-10%] w-[130%] h-28 sm:h-32 md:h-36 -rotate-6 z-0"
+        style={{ filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.08))" }}
+      >
+        <CanaryFlagWaving className="w-full h-full" />
+      </div>
 
-      {/* Overlay sutil para mejorar legibilidad sobre las banderas */}
-      <div className="fixed inset-0 z-10 pointer-events-none bg-white/55 backdrop-blur-[1.5px]" />
+      {/* Colombia (abajo, diagonal suave hacia la derecha) */}
+      <div
+        aria-hidden
+        className="fixed bottom-3 right-[-10%] w-[130%] h-28 sm:h-32 md:h-36 rotate-6 z-0"
+        style={{ filter: "drop-shadow(0 -6px 16px rgba(0,0,0,0.08))" }}
+      >
+        <ColombiaFlagWaving className="w-full h-full" />
+      </div>
+
+      {/* Overlay sutil para legibilidad (permite ver color/ondeo) */}
+      <div className="fixed inset-0 z-10 pointer-events-none bg-white/40 backdrop-blur-[1px]" />
 
       {/* ===== Contenido ===== */}
-      {/* padding-top/bottom para que el contenido no tape las tiras en móvil */}
+      {/* padding-top/bottom para no solapar con las tiras diagonales */}
       <div className="relative z-20 mx-auto max-w-5xl px-4 sm:px-6 pt-28 pb-28 sm:pt-32 sm:pb-32">
         {/* Header */}
         <header className="mb-5 sm:mb-8 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
@@ -510,7 +613,7 @@ export default function DigitalMenu() {
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}
-                className="group flex w-full items-center justify-between rounded-xl border border-white/50 bg-white/80 px-4 py-3 shadow-sm backdrop-blur hover:bg-white"
+                className="group flex w-full items-center justify-between rounded-xl border border-white/50 bg-white/85 px-4 py-3 shadow-sm backdrop-blur hover:bg-white"
                 style={{
                   boxShadow:
                     "0 1px 0 rgba(0,0,0,0.02), 0 8px 20px rgba(0,0,0,0.06)",

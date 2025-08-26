@@ -30,7 +30,7 @@ const DISHES: Dish[] = [
       fr: "Béchamel onctueuse au jambon ibérique, panées et frites. 6 pièces.",
     },
     image:
-      "https://assets.tmecosys.com/image/upload/t_web_rdp_recipe_584x480/img/recipe/ras/Assets/F9D4BA2E-255F-417A-8C7C-C2DEAFA8B351/Derivates/265B15E9-7DC7-4DE3-9F70-2BD602C54BB1.jpg",
+      "https://images.unsplash.com/photo-1617191518009-6e7d36e9fe2e?q=80&w=1400&auto=format&fit=crop",
   },
   {
     id: "ensalada-mediterranea",
@@ -372,51 +372,32 @@ export default function DigitalMenu() {
   }, [dishesSorted]);
 
   return (
-    <div className="mx-auto max-w-5xl p-6">
-      <header className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">{I18N[lang].menuTitle}</h1>
-          <p className="mt-1 text-sm text-gray-500">{I18N[lang].subtitle}</p>
-        </div>
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Fondo banderas (Canarias izquierda, Colombia derecha) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        {/* Canarias: blanco - azul - amarillo (vertical) */}
+        <div
+          className="absolute -left-10 top-0 h-full w-[70%] -skew-y-3"
+          style={{
+            background:
+              "linear-gradient(to right, #ffffff 0 33.33%, #0057B8 33.33% 66.66%, #FCD116 66.66% 100%)",
+          }}
+        />
+        {/* Colombia: amarillo (50%), azul (25%), rojo (25%) (horizontal) */}
+        <div
+          className="absolute -right-10 top-0 h-full w-[70%] -skew-y-3"
+          style={{
+            background:
+              "linear-gradient(to bottom, #FCD116 0 50%, #003893 50% 75%, #CE1126 75% 100%)",
+          }}
+        />
+      </div>
 
-        <label className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 shadow-sm">
-          <Globe className="h-4 w-4" aria-hidden />
-          <span className="text-sm text-gray-600">{I18N[lang].languageLabel}</span>
-          <select
-            className="ml-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-sm focus:outline-none"
-            value={lang}
-            onChange={(e) => setLang(e.target.value as Lang)}
-            aria-label="Seleccionar idioma"
-          >
-            {(["es", "en", "de", "fr"] as Lang[]).map((code) => (
-              <option key={code} value={code}>
-                {LANG_LABEL[code]}
-              </option>
-            ))}
-          </select>
-        </label>
-      </header>
+      {/* Overlay para legibilidad */}
+      <div className="absolute inset-0 bg-white/65 backdrop-blur-[2px] -z-0" />
 
-      {Object.entries(grouped).map(([cat, items]) => (
-        <section key={cat} className="mb-8">
-          <h2 className="mb-4 text-xl font-semibold text-gray-800">{I18N[lang].categories[cat as Category]}</h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {items.map((dish) => (
-              <DishCard
-                key={dish.id}
-                dish={dish}
-                lang={lang}
-                isOpen={open.has(dish.id)}
-                onToggle={() => toggle(dish.id)}
-              />)
-            )}
-          </div>
-        </section>
-      ))}
-
-      <footer className="mt-10 text-center text-xs text-gray-400">
-        © {new Date().getFullYear()} — Ejemplo de menú digital. Puedes editar el array DISHES para personalizarlo.
-      </footer>
+      {/* Contenido */}
+      <div className="relative z-10 mx-auto max-w-5xl p-6">$1</div>
     </div>
   );
 }

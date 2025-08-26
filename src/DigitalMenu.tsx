@@ -37,11 +37,13 @@ const I18N: Record<
     subtitle: string;
     languageLabel: string;
     categories: Record<Category, string>;
+    expandAll: string;
+    collapseAll: string;
   }
 > = {
   es: {
     menuTitle: "Menú",
-    subtitle: "Toca un plato para ver la descripción e imagen.",
+    subtitle: "Toca un plato o una categoría para ver la descripción e imagen.",
     languageLabel: "Idioma",
     categories: {
       entrantes: "Entrantes",
@@ -50,10 +52,12 @@ const I18N: Record<
       postre: "Postre",
       bebidas: "Bebidas",
     },
+    expandAll: "Expandir todo",
+    collapseAll: "Recoger todo",
   },
   en: {
     menuTitle: "Menu",
-    subtitle: "Tap a dish to see the description and photo.",
+    subtitle: "Tap a dish or a category to see description and photo.",
     languageLabel: "Language",
     categories: {
       entrantes: "Starters",
@@ -62,10 +66,12 @@ const I18N: Record<
       postre: "Dessert",
       bebidas: "Drinks",
     },
+    expandAll: "Expand all",
+    collapseAll: "Collapse all",
   },
   de: {
     menuTitle: "Menü",
-    subtitle: "Tippe auf ein Gericht, um Beschreibung und Foto zu sehen.",
+    subtitle: "Tippe auf ein Gericht oder eine Kategorie für Beschreibung und Foto.",
     languageLabel: "Sprache",
     categories: {
       entrantes: "Vorspeisen",
@@ -74,10 +80,12 @@ const I18N: Record<
       postre: "Dessert",
       bebidas: "Getränke",
     },
+    expandAll: "Alle öffnen",
+    collapseAll: "Alle schließen",
   },
   fr: {
     menuTitle: "Menu",
-    subtitle: "Touchez un plat pour voir la description et la photo.",
+    subtitle: "Touchez un plat ou une catégorie pour voir la description et la photo.",
     languageLabel: "Langue",
     categories: {
       entrantes: "Entrées",
@@ -86,7 +94,18 @@ const I18N: Record<
       postre: "Dessert",
       bebidas: "Boissons",
     },
+    expandAll: "Tout développer",
+    collapseAll: "Tout réduire",
   },
+};
+
+// ===== Colores por categoría (para acentos visuales) =====
+const CAT_COLORS: Record<Category, string> = {
+  entrantes: "#14b8a6", // teal-500
+  carnes: "#ef4444", // red-500
+  pescado: "#3b82f6", // blue-500
+  postre: "#ec4899", // pink-500
+  bebidas: "#f59e0b", // amber-500
 };
 
 // ===== Datos (ejemplo) =====
@@ -284,8 +303,14 @@ function DishCard({
       tabIndex={0}
       onClick={onToggle}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onToggle()}
-      className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      className="relative group rounded-2xl border border-gray-200 bg-white p-4 shadow-md transition hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
     >
+      {/* barra de color según categoría */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-0 top-0 h-1 w-full rounded-t-2xl"
+        style={{ background: CAT_COLORS[dish.category] }}
+      />
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
           <div className="truncate text-lg font-semibold">{dish.name}</div>
@@ -332,7 +357,10 @@ function DishCard({
 
 // ===== Componente principal =====
 export default function DigitalMenu() {
-  const [open, setOpen] = useState<Set<string>>(new Set());
+  const [openCards, setOpenCards] = useState<Set<string>>(new Set());
+  const [openCats, setOpenCats] = useState<Set<Category>>(
+    () => new Set(["entrantes", "carnes", "pescado", "postre", "bebidas"]) // por defecto todas abiertas
+  );
   const [lang, setLang] = useState<Lang>(() => {
     if (typeof window !== "undefined") {
       const saved = window.localStorage.getItem("menu:lang") as Lang | null;
@@ -347,8 +375,8 @@ export default function DigitalMenu() {
     }
   }, [lang]);
 
-  const toggle = (id: string) => {
-    setOpen((prev) => {
+  const toggleCard = (id: string) => {
+    setOpenCards((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
@@ -356,12 +384,25 @@ export default function DigitalMenu() {
     });
   };
 
+  const toggleCategory = (cat: Category) => {
+    setOpenCats((prev) => {
+      const next = new Set(prev);
+      if (next.has(cat)) next.delete(cat);
+      else next.add(cat);
+      return next;
+    });
+  };
+
+  const setAllCats = (open: boolean) => {
+    setOpenCats(open ? new Set(["entrantes", "carnes", "pescado", "postre", "bebidas"]) : new Set());
+  };
+
   // ordenamos por categoría y nombre
+  const order: Category[] = ["entrantes", "carnes", "pescado", "postre", "bebidas"];
   const dishesSorted = useMemo(
     () =>
       [...DISHES].sort((a, b) => {
         if (a.category === b.category) return a.name.localeCompare(b.name);
-        const order: Category[] = ["entrantes", "carnes", "pescado", "postre", "bebidas"];
         return order.indexOf(a.category) - order.indexOf(b.category);
       }),
     []
@@ -380,19 +421,19 @@ export default function DigitalMenu() {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* ===== Fondo de banderas ===== */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        {/* Canarias (arriba): blanco - azul - amarillo, franjas verticales */}
+      {/* ===== Fondo de banderas (mobile-first, sin ocupar toda la altura) ===== */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 -z-10">
+        {/* Canarias (arriba) - franja decorativa */}
         <div
-          className="absolute inset-x-0 top-0 h-1/2"
+          className="mx-auto mt-[-16px] h-32 sm:h-40 w-[120%] sm:w-[100%] rounded-b-[40px]"
           style={{
             background:
               "linear-gradient(to right, #ffffff 0 33.33%, #0057B8 33.33% 66.66%, #FCD116 66.66% 100%)",
           }}
         />
-        {/* Colombia (abajo): amarillo 50%, azul 25%, rojo 25%, franjas horizontales */}
+        {/* Colombia (abajo) - franja decorativa */}
         <div
-          className="absolute inset-x-0 bottom-0 h-1/2"
+          className="absolute left-1/2 bottom-0 -translate-x-1/2 mb-[-16px] h-32 sm:h-40 w-[120%] sm:w-[100%] rounded-t-[40px]"
           style={{
             background:
               "linear-gradient(to bottom, #FCD116 0 50%, #003893 50% 75%, #CE1126 75% 100%)",
@@ -400,56 +441,117 @@ export default function DigitalMenu() {
         />
       </div>
 
-      {/* Overlay para legibilidad */}
-      <div className="absolute inset-0 -z-0 bg-white/65 backdrop-blur-[2px]" />
+      {/* Overlay para legibilidad (más sutil para que se vean los colores) */}
+      <div className="absolute inset-0 -z-0 bg-white/50 backdrop-blur-[1.5px]" />
 
       {/* ===== Contenido ===== */}
-      <div className="relative z-10 mx-auto max-w-5xl p-6">
-        <header className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+      <div className="relative z-10 mx-auto max-w-5xl p-4 sm:p-6">
+        {/* Header */}
+        <header className="mb-4 sm:mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">{I18N[lang].menuTitle}</h1>
-            <p className="mt-1 text-sm text-gray-500">{I18N[lang].subtitle}</p>
+            <h1 className="text-2xl font-extrabold tracking-tight">
+              {I18N[lang].menuTitle}
+            </h1>
+            <p className="mt-1 text-sm text-gray-600">{I18N[lang].subtitle}</p>
           </div>
 
-          <label className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 shadow-sm">
-            <Globe className="h-4 w-4" aria-hidden />
-            <span className="text-sm text-gray-600">{I18N[lang].languageLabel}</span>
-            <select
-              className="ml-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-sm focus:outline-none"
-              value={lang}
-              onChange={(e) => setLang(e.target.value as Lang)}
-              aria-label="Seleccionar idioma"
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setAllCats(true)}
+              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50"
             >
-              {(["es", "en", "de", "fr"] as Lang[]).map((code) => (
-                <option key={code} value={code}>
-                  {LANG_LABEL[code]}
-                </option>
-              ))}
-            </select>
-          </label>
+              {I18N[lang].expandAll}
+            </button>
+            <button
+              onClick={() => setAllCats(false)}
+              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+            >
+              {I18N[lang].collapseAll}
+            </button>
+
+            <label className="ml-2 flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 shadow-sm">
+              <Globe className="h-4 w-4" aria-hidden />
+              <span className="text-sm text-gray-600">{I18N[lang].languageLabel}</span>
+              <select
+                className="ml-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-sm focus:outline-none"
+                value={lang}
+                onChange={(e) => setLang(e.target.value as Lang)}
+                aria-label="Seleccionar idioma"
+              >
+                {(["es", "en", "de", "fr"] as Lang[]).map((code) => (
+                  <option key={code} value={code}>
+                    {LANG_LABEL[code]}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
         </header>
 
-        {Object.entries(grouped).map(([cat, items]) => (
-          <section key={cat} className="mb-8">
-            <h2 className="mb-4 text-xl font-semibold text-gray-800">
-              {I18N[lang].categories[cat as Category]}
-            </h2>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {items.map((dish) => (
-                <DishCard
-                  key={dish.id}
-                  dish={dish}
-                  lang={lang}
-                  isOpen={open.has(dish.id)}
-                  onToggle={() => toggle(dish.id)}
-                />
-              ))}
-            </div>
-          </section>
-        ))}
+        {/* Secciones por categoría */}
+        {order.map((cat) => {
+          const items = grouped[cat];
+          const isOpen = openCats.has(cat);
+          const t = I18N[lang].categories[cat];
+          const accent = CAT_COLORS[cat];
 
-        <footer className="mt-10 text-center text-xs text-gray-400">
-          © {new Date().getFullYear()} — Ejemplo de menú digital. Edita el array DISHES para personalizarlo.
+          return (
+            <section key={cat} className="mb-6">
+              {/* Encabezado de categoría (colapsable) */}
+              <button
+                onClick={() => toggleCategory(cat)}
+                aria-expanded={isOpen}
+                className="group flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur hover:bg-white"
+                style={{
+                  boxShadow:
+                    "0 1px 0 rgba(0,0,0,0.02), 0 8px 20px rgba(0,0,0,0.04)",
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <span
+                    className="inline-block h-3 w-3 rounded-full"
+                    style={{ background: accent }}
+                    aria-hidden
+                  />
+                  <h2 className="text-base font-semibold text-gray-800">{t}</h2>
+                </div>
+                <ChevronDown
+                  className={`h-5 w-5 text-gray-500 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"}`}
+                  aria-hidden
+                />
+              </button>
+
+              {/* Contenido de la categoría */}
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key={`${cat}-content`}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+                      {items.map((dish) => (
+                        <DishCard
+                          key={dish.id}
+                          dish={dish}
+                          lang={lang}
+                          isOpen={openCards.has(dish.id)}
+                          onToggle={() => toggleCard(dish.id)}
+                        />
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </section>
+          );
+        })}
+
+        <footer className="mt-8 text-center text-xs text-gray-400">
+          © {new Date().getFullYear()} — Menú de ejemplo. Edita el array DISHES para personalizarlo.
         </footer>
       </div>
     </div>

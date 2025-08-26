@@ -442,8 +442,9 @@ export default function DigitalMenu() {
         <img
           src={BG_URL}
           alt=""
-          className="h-full w-full object-cover"
-          loading="lazy"
+         className="absolute inset-0 h-full w-full object-cover"
+    style={{ width: "100vw", height: "100vh" }}
+    loading="lazy"
         />
         {/* overlay (ajusta opacidad/color a tu gusto) */}
         <div className="absolute inset-0 bg-white/20" />

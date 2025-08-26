@@ -99,7 +99,7 @@ const I18N: Record<
   },
 };
 
-// ===== Colores por categoría (para acentos visuales) =====
+// ===== Colores por categoría (acentos visuales) =====
 const CAT_COLORS: Record<Category, string> = {
   entrantes: "#14b8a6", // teal-500
   carnes: "#ef4444", // red-500
@@ -303,7 +303,11 @@ function DishCard({
       tabIndex={0}
       onClick={onToggle}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onToggle()}
-      className="relative group rounded-2xl border border-gray-200 bg-white p-4 shadow-md transition hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      className="relative group rounded-2xl border border-white/40 bg-white/90 p-4 shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      style={{
+        boxShadow:
+          "0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)",
+      }}
     >
       {/* barra de color según categoría */}
       <div
@@ -314,7 +318,9 @@ function DishCard({
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
           <div className="truncate text-lg font-semibold">{dish.name}</div>
-          <div className="mt-1 text-sm text-gray-500">{I18N[lang].categories[dish.category]}</div>
+          <div className="mt-1 text-sm text-gray-600">
+            {I18N[lang].categories[dish.category]}
+          </div>
         </div>
         <div className="flex items-center gap-3">
           <div className="whitespace-nowrap text-base font-semibold">
@@ -420,58 +426,61 @@ export default function DigitalMenu() {
   }, [dishesSorted]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      {/* ===== Fondo de banderas (mobile-first, sin ocupar toda la altura) ===== */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 -z-10">
-        {/* Canarias (arriba) - franja decorativa */}
-        <div
-          className="mx-auto mt-[-16px] h-32 sm:h-40 w-[120%] sm:w-[100%] rounded-b-[40px]"
-          style={{
-            background:
-              "linear-gradient(to right, #ffffff 0 33.33%, #0057B8 33.33% 66.66%, #FCD116 66.66% 100%)",
-          }}
-        />
-        {/* Colombia (abajo) - franja decorativa */}
-        <div
-          className="absolute left-1/2 bottom-0 -translate-x-1/2 mb-[-16px] h-32 sm:h-40 w-[120%] sm:w-[100%] rounded-t-[40px]"
-          style={{
-            background:
-              "linear-gradient(to bottom, #FCD116 0 50%, #003893 50% 75%, #CE1126 75% 100%)",
-          }}
-        />
-      </div>
+    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-white to-white/70">
+      {/* ===== Banderas decorativas fijas (mobile-first). No ocupan toda la altura. ===== */}
+      {/* Canaria (arriba): tira fija con franjas verticales */}
+      <div
+        aria-hidden
+        className="fixed top-0 left-0 right-0 h-24 sm:h-28 md:h-32 z-0"
+        style={{
+          background:
+            "linear-gradient(to right, #ffffff 0 33.33%, #0057B8 33.33% 66.66%, #FCD116 66.66% 100%)",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+        }}
+      />
+      {/* Colombia (abajo): tira fija con franjas horizontales */}
+      <div
+        aria-hidden
+        className="fixed bottom-0 left-0 right-0 h-24 sm:h-28 md:h-32 z-0"
+        style={{
+          background:
+            "linear-gradient(to bottom, #FCD116 0 50%, #003893 50% 75%, #CE1126 75% 100%)",
+          boxShadow: "0 -4px 16px rgba(0,0,0,0.08)",
+        }}
+      />
 
-      {/* Overlay para legibilidad (más sutil para que se vean los colores) */}
-      <div className="absolute inset-0 -z-0 bg-white/50 backdrop-blur-[1.5px]" />
+      {/* Overlay sutil para mejorar legibilidad sobre las banderas */}
+      <div className="fixed inset-0 z-10 pointer-events-none bg-white/55 backdrop-blur-[1.5px]" />
 
       {/* ===== Contenido ===== */}
-      <div className="relative z-10 mx-auto max-w-5xl p-4 sm:p-6">
+      {/* padding-top/bottom para que el contenido no tape las tiras en móvil */}
+      <div className="relative z-20 mx-auto max-w-5xl px-4 sm:px-6 pt-28 pb-28 sm:pt-32 sm:pb-32">
         {/* Header */}
-        <header className="mb-4 sm:mb-6 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+        <header className="mb-5 sm:mb-8 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight">
               {I18N[lang].menuTitle}
             </h1>
-            <p className="mt-1 text-sm text-gray-600">{I18N[lang].subtitle}</p>
+            <p className="mt-1 text-sm text-gray-700">{I18N[lang].subtitle}</p>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setAllCats(true)}
-              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+              className="rounded-lg border border-white/50 bg-white/80 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm backdrop-blur hover:bg-white"
             >
               {I18N[lang].expandAll}
             </button>
             <button
               onClick={() => setAllCats(false)}
-              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+              className="rounded-lg border border-white/50 bg-white/80 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm backdrop-blur hover:bg-white"
             >
               {I18N[lang].collapseAll}
             </button>
 
-            <label className="ml-2 flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 shadow-sm">
+            <label className="ml-2 flex items-center gap-2 rounded-xl border border-white/50 bg-white/80 px-3 py-2 shadow-sm backdrop-blur">
               <Globe className="h-4 w-4" aria-hidden />
-              <span className="text-sm text-gray-600">{I18N[lang].languageLabel}</span>
+              <span className="text-sm text-gray-700">{I18N[lang].languageLabel}</span>
               <select
                 className="ml-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-sm focus:outline-none"
                 value={lang}
@@ -488,7 +497,7 @@ export default function DigitalMenu() {
           </div>
         </header>
 
-        {/* Secciones por categoría */}
+        {/* Secciones por categoría (colapsables) */}
         {order.map((cat) => {
           const items = grouped[cat];
           const isOpen = openCats.has(cat);
@@ -497,14 +506,14 @@ export default function DigitalMenu() {
 
           return (
             <section key={cat} className="mb-6">
-              {/* Encabezado de categoría (colapsable) */}
+              {/* Encabezado de categoría */}
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}
-                className="group flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white/80 px-4 py-3 shadow-sm backdrop-blur hover:bg-white"
+                className="group flex w-full items-center justify-between rounded-xl border border-white/50 bg-white/80 px-4 py-3 shadow-sm backdrop-blur hover:bg-white"
                 style={{
                   boxShadow:
-                    "0 1px 0 rgba(0,0,0,0.02), 0 8px 20px rgba(0,0,0,0.04)",
+                    "0 1px 0 rgba(0,0,0,0.02), 0 8px 20px rgba(0,0,0,0.06)",
                 }}
               >
                 <div className="flex items-center gap-3">
@@ -513,10 +522,10 @@ export default function DigitalMenu() {
                     style={{ background: accent }}
                     aria-hidden
                   />
-                  <h2 className="text-base font-semibold text-gray-800">{t}</h2>
+                  <h2 className="text-base font-semibold text-gray-900">{t}</h2>
                 </div>
                 <ChevronDown
-                  className={`h-5 w-5 text-gray-500 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"}`}
+                  className={`h-5 w-5 text-gray-600 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"}`}
                   aria-hidden
                 />
               </button>
@@ -550,7 +559,7 @@ export default function DigitalMenu() {
           );
         })}
 
-        <footer className="mt-8 text-center text-xs text-gray-400">
+        <footer className="mt-8 text-center text-xs text-gray-600">
           © {new Date().getFullYear()} — Menú de ejemplo. Edita el array DISHES para personalizarlo.
         </footer>
       </div>

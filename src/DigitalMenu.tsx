@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ChevronDown, Globe } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { DISHES, CAT_COLORS, IMG, slug, Category, Dish, Lang } from "./dishes";
@@ -7,10 +7,13 @@ import { DISHES, CAT_COLORS, IMG, slug, Category, Dish, Lang } from "./dishes";
  * DigitalMenu.tsx — versión por secciones del PDF
  * Comida: Starters, Main Dishes, Grill, Dessert
  * Bebidas: Soft drinks, Beers, Waters, Coffee & infusions, Spirits & mixers, Wines
- * - I18N (ES/EN/DE/FR)
- * - Precios múltiples: chupito/copa, medio/entero
- * - Mobile-first (Tailwind)
- * - Barra “sticky” robusta via position: fixed + scroll detector
+ * - Nombre traducido por idioma (ES/EN/DE/FR)
+ * - Descripción breve con ingredientes (en los 4 idiomas)
+ * - Precio vacío cuando no está claro
+ * - Soporte de precios múltiples:
+ *    · Licores: chupito / copa
+ *    · Pollo: medio / entero
+ * - Estilos mobile-first (Tailwind)
  */
 
 const BG_URL = "img/11.jpg";
@@ -151,6 +154,71 @@ const I18N: Record<
     },
   },
 };
+
+/* ===================== “Logo” con texto + SVG ===================== */
+function LogoWordmark({ lang }: { lang: Lang }) {
+  const title = "SAZÓN DE MI TIERRA";
+  return (
+    <div className="relative select-none">
+      {/* Texto principal */}
+      <div
+        aria-hidden
+        className="uppercase font-extrabold tracking-wide text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.28)] leading-none"
+      >
+        <span className="inline-block -skew-y-1 text-3xl sm:text-5xl">
+          {title}
+        </span>
+      </div>
+      {/* Título accesible */}
+      <h1 className="sr-only">
+        {I18N[lang].menuTitle} Sazón de mi Tierra
+      </h1>
+
+      {/* Guirnalda inferior */}
+      <svg
+        className="mt-2 h-7 sm:h-9 w-full text-white"
+        viewBox="0 0 640 48"
+        fill="none"
+        role="img"
+        aria-label="ornamento"
+      >
+        <path
+          d="M4 26 C 68 6, 136 42, 200 26 S 328 6, 392 26 S 520 42, 584 26 S 640 6, 700 26"
+          stroke="currentColor"
+          strokeWidth="4"
+          strokeLinecap="round"
+          fill="none"
+        />
+        {[
+          40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560,
+        ].map((x, i) => (
+          <g key={x}>
+            <ellipse
+              cx={x}
+              cy={i % 2 === 0 ? 18 : 34}
+              rx="7"
+              ry="3.2"
+              transform={`rotate(${i % 2 === 0 ? -18 : 18}, ${x}, ${
+                i % 2 === 0 ? 18 : 34
+              })`}
+              fill="currentColor"
+            />
+            <ellipse
+              cx={x + 10}
+              cy={i % 2 === 0 ? 34 : 18}
+              rx="7"
+              ry="3.2"
+              transform={`rotate(${i % 2 === 0 ? 18 : -18}, ${x + 10}, ${
+                i % 2 === 0 ? 34 : 18
+              })`}
+              fill="currentColor"
+            />
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
 
 /* ===================== Utilidades ===================== */
 function detectDeviceLang(): Lang {
@@ -307,7 +375,7 @@ function DishCard({
                 {/* Texto */}
                 <p className="leading-relaxed text-gray-800">{description}</p>
 
-                {/* Chips de precios múltiples */}
+                {/* Repetimos precios como chips si hay múltiples */}
                 {(hasDual || hasHalfWhole) && (
                   <div className="mt-4 flex flex-wrap gap-2">
                     {hasDual && dish.priceShot != null && (
@@ -361,42 +429,6 @@ export default function DigitalMenu() {
     }
     return "es";
   });
-
-  // ==== NEW: refs por sección y barra fija “sticky” ====
-  const sectionRefs = useRef<Partial<Record<Category, HTMLElement | null>>>({});
-  const [stickyCat, setStickyCat] = useState<Category | null>(null);
-
-  useEffect(() => {
-    const handle = () => {
-      // Prioriza el primer abierto que esté "ocupando" el top del viewport
-      let candidate: { cat: Category; top: number } | null = null;
-      const TOP_OFFSET = 8;   // px desde el borde superior
-      const HIDE_AT = 56;     // umbral para cuando ya saliste de la sección
-
-      for (const cat of order) {
-        if (!openCats.has(cat)) continue;
-        const el = sectionRefs.current[cat];
-        if (!el) continue;
-        const r = el.getBoundingClientRect();
-        // Está en el viewport (el encabezado debería verse)
-        if (r.top <= TOP_OFFSET && r.bottom > HIDE_AT) {
-          if (!candidate || r.top > candidate.top) {
-            candidate = { cat, top: r.top };
-          }
-        }
-      }
-      setStickyCat(candidate ? candidate.cat : null);
-    };
-
-    window.addEventListener("scroll", handle, { passive: true });
-    window.addEventListener("resize", handle);
-    handle(); // inicial
-    return () => {
-      window.removeEventListener("scroll", handle);
-      window.removeEventListener("resize", handle);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openCats]); // recalcular cuando cambie qué categorías están abiertas
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -499,42 +531,11 @@ export default function DigitalMenu() {
         <div className="absolute inset-0 bg-white/20" />
       </div>
 
-      {/* Barra fija "sticky" que aparece cuando una categoría abierta ocupa el top */}
-      {stickyCat && (
-        <div className="fixed left-0 right-0 top-0 z-40 px-4 sm:px-6">
-          <div className="mx-auto max-w-5xl pt-2">
-            <button
-              onClick={() => toggleCategory(stickyCat)}
-              aria-expanded
-              className="flex w-full items-center justify-between rounded-xl border border-white/60 bg-white/90 px-4 py-3 shadow-lg backdrop-blur-md"
-              style={{
-                boxShadow:
-                  "0 2px 6px rgba(0,0,0,0.08), 0 6px 20px rgba(0,0,0,0.08)",
-              }}
-            >
-              <div className="flex items-center gap-3">
-                <span
-                  className="inline-block h-3 w-3 rounded-full"
-                  style={{ background: CAT_COLORS[stickyCat] }}
-                  aria-hidden
-                />
-                <h2 className="text-base font-semibold text-gray-900">
-                  {I18N[lang].categories[stickyCat]}
-                </h2>
-              </div>
-              <ChevronDown className="h-5 w-5 rotate-180 text-gray-700" />
-            </button>
-          </div>
-        </div>
-      )}
-
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-8">
         {/* Header */}
         <header className="mb-5 sm:mb-8 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-          <div>
-            <h1 className="text-2xl font-extrabold tracking-tight">
-              {I18N[lang].menuTitle} Sazón de mi Tierra
-            </h1>
+          <div className="flex items-center">
+            <LogoWordmark lang={lang} />
           </div>
 
           <div className="flex items-center gap-2">
@@ -580,12 +581,8 @@ export default function DigitalMenu() {
           const accent = CAT_COLORS[cat];
 
           return (
-            <section
-              key={cat}
-              className="mb-6"
-              ref={(el) => (sectionRefs.current[cat] = el)}
-            >
-              {/* Botón de categoría (no sticky; la barra fija se encarga) */}
+            <section key={cat} className="mb-6">
+              {/* Encabezado de categoría */}
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}

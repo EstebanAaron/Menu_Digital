@@ -40,9 +40,9 @@ export const CAT_COLORS: Record<Category, string> = {
 
 export const IMG: Record<Category, string> = {
   starters:
-    "https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/p1111hoto-1551183053-bf91a1d81141?q=80&w=1200&auto=format&fit=crop2",
   main:
-    "https://images.unsplash.com/photo-1625944525567-c0f7c07e3992?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/pho1111to-1625944525567-c0f7c07e3992?q=80&w=1200&auto=format&fit=crop",
   grill:
     "https://images.unsplash.com/photo-1604908812837-0b6f64b2c329?q=80&w=1200&auto=format&fit=crop",
   dessert:
@@ -87,7 +87,7 @@ export const DISHES: Dish[] = [
       de: "Knuspriger Maisteig mit hausgemachter Füllung (Fleisch & Zwiebel). Zutaten: Maismehl, Fleisch, Zwiebel, Gewürze, Öl.",
       fr: "Pâte de maïs frite avec farce maison (viande & oignon). Ingrédients : farine de maïs, viande, oignon, épices, huile.",
     },
-    image: IMG["starters"],
+    image: "public/img/platos/empanada.jpg",
   },
   {
     id: slug("Papa rellena"),
@@ -101,7 +101,7 @@ export const DISHES: Dish[] = [
     },
     price: 3.5,
     descriptions: {
-      es: "Bola de patata rellena y dorada. Ingredientes: patata, carne, huevo, cebolla, especias.",
+      es: "Bola de papa rellena y dorada. Ingredientes: papa, carne, huevo, cebolla, especias.",
       en: "Golden stuffed potato ball. Ingredients: potato, minced meat, egg, onion, spices.",
       de: "Goldbraune, gefüllte Kartoffelkugel. Zutaten: Kartoffel, Hackfleisch, Ei, Zwiebel, Gewürze.",
       fr: "Boule de pomme de terre farcie, dorée. Ingrédients : pomme de terre, viande hachée, œuf, oignon, épices.",
@@ -144,7 +144,7 @@ export const DISHES: Dish[] = [
       de: "Mais-Arepa mit knuspriger Schweineschwarte. Zutaten: Maismehl, Schweineschwarte, Salz.",
       fr: "Arepa de maïs au chicharrón croustillant. Ingrédients : farine de maïs, couenne de porc, sel.",
     },
-    image: IMG["starters"],
+    image: "public/img/platos/arepa-chicharron.jpg",
   },
   {
     id: slug("Patacon con hogao"),
@@ -163,7 +163,7 @@ export const DISHES: Dish[] = [
       de: "Frittierte Kochbanane mit kreolischer Sauce. Zutaten: Kochbanane, Tomate, Zwiebel, Knoblauch, Öl.",
       fr: "Banane plantain frite avec sauce créole. Ingrédients : plantain vert, tomate, oignon, ail, huile.",
     },
-    image: IMG["starters"],
+    image: "public/img/platos/patacon-hogao.jpg",
   },
   {
     id: slug("Patacon con queso"),
@@ -175,7 +175,7 @@ export const DISHES: Dish[] = [
       de: "Patacón mit Käse",
       fr: "Patacón au fromage",
     },
-    price: 6.0,
+    price: 7.0,
     descriptions: {
       es: "Patacón crujiente con queso fundido. Ingredientes: plátano verde, queso, aceite.",
       en: "Crispy plantain topped with melted cheese. Ingredients: green plantain, cheese, oil.",
@@ -239,7 +239,7 @@ export const DISHES: Dish[] = [
       de: "Cremig nach Hausart. Zutaten: Ei, Butter, Salz.",
       fr: "Crémeux, façon maison. Ingrédients : œuf, beurre, sel.",
     },
-    image: IMG["starters"],
+    image: "public/img/platos/huevos.jpg",
   },
   {
     id: slug("Escaldon"),
@@ -258,7 +258,7 @@ export const DISHES: Dish[] = [
       de: "Gofio mit Brühe angerührt. Zutaten: Gofio, Brühe, Zwiebel, Koriander.",
       fr: "Gofio lié au bouillon. Ingrédients : gofio, bouillon, oignon, coriandre.",
     },
-    image: IMG["starters"],
+    image: "",
   },
   {
     id: slug("Papas arrugadas con mojo"),
@@ -270,9 +270,9 @@ export const DISHES: Dish[] = [
       de: "Runzelkartoffeln mit Mojo",
       fr: "Pommes de terre « arrugadas » au mojo",
     },
-    price: 6.0,
+    price: 3.0,
     descriptions: {
-      es: "Patatas canarias con mojo rojo o verde. Ingredientes: papa canaria, sal, ajo, pimienta, aceite, vinagre.",
+      es: "papas canarias con mojo rojo o verde. Ingredientes: papa canaria, sal, ajo, pimienta, aceite, vinagre.",
       en: "Canary potatoes with red or green mojo. Ingredients: Canarian potato, salt, garlic, pepper, oil, vinegar.",
       de: "Kanarische Kartoffeln mit rotem/grünem Mojo. Zutaten: Kartoffel, Salz, Knoblauch, Pfeffer, Öl, Essig.",
       fr: "Pommes de terre canariennes au mojo rouge/vert. Ingrédients : pomme de terre, sel, ail, poivre, huile, vinaigre.",
@@ -308,14 +308,14 @@ export const DISHES: Dish[] = [
       de: "Salat « Sazón de mi Tierra »",
       fr: "Salade « Sazón de mi Tierra »",
     },
-    price: null,
+    price: 6.0,
     descriptions: {
       es: "Ensalada de la casa. Ingredientes: mezcla de verdes, tomate, pepino, cebolla, vinagreta.",
       en: "House salad. Ingredients: mixed greens, tomato, cucumber, onion, vinaigrette.",
       de: "Haussalat. Zutaten: Blattsalat-Mix, Tomate, Gurke, Zwiebel, Vinaigrette.",
       fr: "Salade maison. Ingrédients : mesclun, tomate, concombre, oignon, vinaigrette.",
     },
-    image: IMG["starters"],
+    image: "public/img/platos/ensalada-sazon.jpg",
   },
 
   /* ---------- MAIN DISHES (incluye sopas del PDF) ---------- */
@@ -336,7 +336,7 @@ export const DISHES: Dish[] = [
       de: "Kolumbianischer Klassiker. Zutaten: Bohnen, Reis, Fleisch, Schwarte, Ei, Kochbanane, Arepa.",
       fr: "Classique colombien. Ingrédients : haricots, riz, viande, couenne, œuf, banane plantain, arepa.",
     },
-    image: IMG["main"],
+    image: "public/img/platos/bandeja-paisa.jpg",
   },
   {
     id: slug("Chuleta valluna"),
@@ -355,7 +355,7 @@ export const DISHES: Dish[] = [
       de: "Paniert und knusprig. Zutaten: Schweinekotelett, Paniermehl, Ei, Gewürze.",
       fr: "Panée et croustillante. Ingrédients : côte de porc, chapelure, œuf, épices.",
     },
-    image: IMG["main"],
+    image: "public/img/platos/valluna.jpg",
   },
   {
     id: slug("Panceta asada"),
@@ -438,7 +438,7 @@ export const DISHES: Dish[] = [
     category: "main",
     name: "Costillas con papas y mazorca",
     i18nNames: {
-      es: "Costillas con papas y mazorca",
+      es: "Costillas con piña",
       en: "Ribs with potatoes & corn",
       de: "Rippen mit Kartoffeln & Mais",
       fr: "Côtes avec pommes de terre & maïs",
@@ -450,7 +450,7 @@ export const DISHES: Dish[] = [
       de: "Rustikale Beilage. Zutaten: Schweinerippen, Kartoffel, Mais, Gewürze.",
       fr: "Garniture rustique. Ingrédients : côtes de porc, pomme de terre, maïs, épices.",
     },
-    image: IMG["main"],
+    image: "public/img/platos/costilla-piña.jpg",
   },
   {
     id: slug("Carne de cabra"),
@@ -469,7 +469,7 @@ export const DISHES: Dish[] = [
       de: "Traditioneller Eintopf. Zutaten: Ziege, Tomate, Zwiebel, Knoblauch, Wein, Gewürze.",
       fr: "Ragoût traditionnel. Ingrédients : chèvre, tomate, oignon, ail, vin, épices.",
     },
-    image: IMG["main"],
+    image: "public/img/platos/carne-cabra.jpg",
   },
   {
     id: slug("Garbanzos"),
@@ -502,7 +502,7 @@ export const DISHES: Dish[] = [
     },
     price: 6.0,
     descriptions: {
-      es: "Clásico y nutritivo. Ingredientes: lenteja, zanahoria, patata, laurel, especias.",
+      es: "Clásico y nutritivo. Ingredientes: lenteja, zanahoria, papa, laurel, especias.",
       en: "Classic & hearty. Ingredients: lentils, carrot, potato, bay leaf, spices.",
       de: "Klassisch & herzhaft. Zutaten: Linsen, Karotte, Kartoffel, Lorbeer, Gewürze.",
       fr: "Classique & copieux. Ingrédients : lentilles, carotte, pomme de terre, laurier, épices.",
@@ -521,7 +521,7 @@ export const DISHES: Dish[] = [
     },
     price: 6.0,
     descriptions: {
-      es: "Vegetal y aromático. Ingredientes: berros, patata, calabaza, cebolla, especias.",
+      es: "Vegetal y aromático. Ingredientes: berros, papa, calabaza, cebolla, especias.",
       en: "Vegetable & aromatic. Ingredients: watercress, potato, pumpkin, onion, spices.",
       de: "Gemüsig & aromatisch. Zutaten: Brunnenkresse, Kartoffel, Kürbis, Zwiebel, Gewürze.",
       fr: "Végétal & aromatique. Ingrédients : cresson, pomme de terre, courge, oignon, épices.",
@@ -546,7 +546,7 @@ export const DISHES: Dish[] = [
       de: "Traditionelle Suppe. Zutaten: Huhn, Maniok, Kartoffel, Mais, Koriander.",
       fr: "Soupe traditionnelle. Ingrédients : poule, manioc, pomme de terre, maïs, coriandre.",
     },
-    image: IMG["main"],
+    image:"public/img/platos/sancocho-gallina.jpg",
   },
   {
     id: slug("Sancocho trifasico"),
@@ -558,7 +558,7 @@ export const DISHES: Dish[] = [
       de: "Dreifacher Sancocho (samstags)",
       fr: "Sancocho « trifásico » (samedis)",
     },
-    price: 10.0,
+    price: 13.0,
     descriptions: {
       es: "Tres carnes. Ingredientes: res, cerdo, pollo, yuca, papa, maíz.",
       en: "Three meats. Ingredients: beef, pork, chicken, cassava, potato, corn.",
@@ -597,26 +597,26 @@ export const DISHES: Dish[] = [
       de: "Kabeljau mit Zwiebeln",
       fr: "Morue aux oignons",
     },
-    price: null,
+    price: 16.0,
     descriptions: {
       es: "Lomo de bacalao con cebolla confitada. Ingredientes: bacalao, cebolla, aceite de oliva, ajo, perejil, sal.",
       en: "Cod loin with caramelized onions. Ingredients: cod, onion, olive oil, garlic, parsley, salt.",
       de: "Kabeljaufilet mit geschmorten Zwiebeln. Zutaten: Kabeljau, Zwiebel, Olivenöl, Knoblauch, Petersilie, Salz.",
       fr: "Filet de morue aux oignons confits. Ingrédients : morue, oignon, huile d’olive, ail, persil, sel.",
     },
-    image: IMG["main"],
+    image: "public/img/platos/bacalao.jpg",
   },
   {
     id: slug("Pescado frito"),
     category: "main",
     name: "Pescado frito",
     i18nNames: {
-      es: "Pescado frito",
-      en: "Fried fish",
+      es: "Pescado frito(Dorada)",
+      en: "Fried fish(Dorada)",
       de: "Frittierter Fisch",
       fr: "Poisson frit",
     },
-    price: null,
+    price: 16.0,
     descriptions: {
       es: "Pieza de pescado dorada y crujiente. Ingredientes: pescado blanco, harina, aceite, limón, sal.",
       en: "Golden, crispy fish piece. Ingredients: white fish, flour, oil, lemon, salt.",
@@ -663,7 +663,7 @@ export const DISHES: Dish[] = [
       de: "Von der Platte, saftig. Zutaten: Schweinefilet, Salz, Pfeffer, Öl.",
       fr: "Saisi, juteux. Ingrédients : filet de porc, sel, poivre, huile.",
     },
-    image: IMG["grill"],
+    image: "public/img/platos/solomillo-cerdo.jpg",
   },
   {
     id: slug("Entrecot de ternera"),
@@ -682,7 +682,7 @@ export const DISHES: Dish[] = [
       de: "Nach Wunsch. Zutaten: Entrecôte, Salz, Pfeffer, Öl.",
       fr: "À la demande. Ingrédients : entrecôte, sel, poivre, huile.",
     },
-    image: IMG["grill"],
+    image: "public/img/platos/entrecot.jpg",
   },
   {
     id: slug("Secreto iberico"),
@@ -713,7 +713,7 @@ export const DISHES: Dish[] = [
       de: "Schweinekotelett",
       fr: "Côte de porc",
     },
-    price: 10.0,
+    price: 9.5,
     descriptions: {
       es: "A la plancha con guarnición. Ingredientes: chuleta, sal, pimienta, aceite.",
       en: "Griddled with garnish. Ingredients: pork chop, salt, pepper, oil.",
@@ -740,7 +740,7 @@ export const DISHES: Dish[] = [
       de: "Vom Grill. Zutaten: Hähnchen, Salz, Pfeffer, Knoblauch, Öl.",
       fr: "Au gril. Ingrédients : poulet, sel, poivre, ail, huile.",
     },
-    image: IMG["grill"],
+    image: "public/img/platos/pollo.jpg",
   },
   // === Nueva GRILL solicitada ===
   {
@@ -753,9 +753,9 @@ export const DISHES: Dish[] = [
       de: "Gegrillte Picada „Sazón de mi Tierra“",
       fr: "Picada grillée « Sazón de mi Tierra »",
     },
-    price: null,
+    price: 35.0,
     descriptions: {
-      es: "Surtido a la brasa para compartir. Ingredientes: ternera, cerdo, pollo, chorizo, arepa/patata, salsas.",
+      es: "Surtido a la brasa para compartir. Ingredientes: ternera, cerdo, pollo, chorizo, arepa/papa, salsas.",
       en: "Grilled assortment to share. Ingredients: beef, pork, chicken, chorizo, arepa/potato, sauces.",
       de: "Gegrillte Auswahl zum Teilen. Zutaten: Rind, Schwein, Huhn, Chorizo, Arepa/Kartoffel, Saucen.",
       fr: "Assortiment grillé à partager. Ingrédients : bœuf, porc, poulet, chorizo, arepa/pomme de terre, sauces.",
@@ -807,7 +807,7 @@ export const DISHES: Dish[] = [
       de: "Príncipe Alberto",
       fr: "Príncipe Alberto",
     },
-    price: null,
+    price: 4.5,
     descriptions: {
       es: "Postre canario. Ingredientes: chocolate, almendra, bizcocho.",
       en: "Canarian dessert. Ingredients: chocolate, almond, sponge.",
@@ -866,7 +866,7 @@ export const DISHES: Dish[] = [
       de: "Coca-Cola (normal/light)",
       fr: "Coca-Cola (classique/light)",
     },
-    price: 1.2,
+    price: 2.0,
     descriptions: {
       es: "Refresco carbonatado. Ingredientes: agua, azúcar/edulcorante, CO₂, aromas.",
       en: "Carbonated soft drink. Ingredients: water, sugar/sweetener, CO₂, flavorings.",
@@ -885,7 +885,7 @@ export const DISHES: Dish[] = [
       de: "Fanta (Orange/Zitrone)",
       fr: "Fanta (orange/citron)",
     },
-    price: 1.3,
+    price: 2.0,
     descriptions: {
       es: "Refresco de sabor. Ingredientes: agua, azúcar, CO₂, aromas cítricos.",
       en: "Flavoured soda. Ingredients: water, sugar, CO₂, citrus flavorings.",
@@ -899,7 +899,7 @@ export const DISHES: Dish[] = [
     category: "drinks-soft",
     name: "Sprite",
     i18nNames: { es: "Sprite", en: "Sprite", de: "Sprite", fr: "Sprite" },
-    price: 1.4,
+    price: 2,
     descriptions: {
       es: "Refresco lima-limón. Ingredientes: agua, azúcar, CO₂, aromas.",
       en: "Lemon-lime soda. Ingredients: water, sugar, CO₂, flavorings.",
@@ -918,7 +918,7 @@ export const DISHES: Dish[] = [
       de: "Fuze Tea (Mango-Ananas)",
       fr: "Fuze Tea (mangue-ananas)",
     },
-    price: 1.8,
+    price: 2.0,
     descriptions: {
       es: "Té frío saborizado. Ingredientes: agua, extracto de té, azúcar, aromas.",
       en: "Flavoured iced tea. Ingredients: water, tea extract, sugar, flavorings.",
@@ -937,7 +937,7 @@ export const DISHES: Dish[] = [
       de: "Royal Bliss (Classic/Berry)",
       fr: "Royal Bliss (Classic/Berry)",
     },
-    price: 1.8,
+    price: 2.0,
     descriptions: {
       es: "Mixer refrescante. Ingredientes: agua carbonatada, azúcar, aromas.",
       en: "Refreshing mixer. Ingredients: carbonated water, sugar, flavorings.",
@@ -951,7 +951,7 @@ export const DISHES: Dish[] = [
     category: "drinks-soft",
     name: "Postobón",
     i18nNames: { es: "Postobón", en: "Postobón", de: "Postobón", fr: "Postobón" },
-    price: 1.2,
+    price: 2.5,
     descriptions: {
       es: "Refresco colombiano. Ingredientes: agua, azúcar, CO₂, aromas.",
       en: "Colombian soda. Ingredients: water, sugar, CO₂, flavorings.",
@@ -1237,7 +1237,7 @@ export const DISHES: Dish[] = [
       de: "Kaffee mit Milch",
       fr: "Café au lait",
     },
-    price: null,
+    price: 1.8,
     descriptions: {
       es: "Clásico suave. Ingredientes: café, leche.",
       en: "Smooth classic. Ingredients: coffee, milk.",
@@ -1256,7 +1256,7 @@ export const DISHES: Dish[] = [
       de: "Kaffee mit Milch & Kondensmilch",
       fr: "Café lait & lait concentré",
     },
-    price: null,
+    price: 1.8,
     descriptions: {
       es: "Con leche y condensada. Ingredientes: café, leche, leche condensada.",
       en: "Milk & condensed milk. Ingredients: coffee, milk, condensed milk.",
@@ -1275,7 +1275,7 @@ export const DISHES: Dish[] = [
       de: "Entkoffeinierter Kaffee",
       fr: "Café décaféiné",
     },
-    price: null,
+    price: 1.2,
     descriptions: {
       es: "Sin cafeína. Ingredientes: café descafeinado, agua.",
       en: "Caffeine-free. Ingredients: decaf coffee, water.",
@@ -1294,7 +1294,7 @@ export const DISHES: Dish[] = [
       de: "Entkoffeiniert mit Milch",
       fr: "Décaféiné au lait",
     },
-    price: null,
+    price: 2.0,
     descriptions: {
       es: "Suave y cremoso. Ingredientes: decaf, leche.",
       en: "Smooth & creamy. Ingredients: decaf, milk.",
@@ -1348,7 +1348,7 @@ export const DISHES: Dish[] = [
       de: "Johnnie Walker Red Label",
       fr: "Johnnie Walker Black Label",
     },
-    // priceShot: null, priceGlass: null, // deja vacío si aún no tienes precios
+    priceShot: 2.0, priceGlass: 3.0, // deja vacío si aún no tienes precios
     descriptions: {
       es: "Blended Scotch. Ingredientes: whisky de malta y grano.",
       en: "Blended Scotch. Ingredients: malt & grain whiskies.",
@@ -1367,6 +1367,7 @@ export const DISHES: Dish[] = [
       de: "Johnnie Walker Black Label",
       fr: "Johnnie Walker Black Label",
     },
+    priceShot: 2.0, priceGlass: 4.5,
     descriptions: {
       es: "Añejo escocés. Ingredientes: mezcla de whiskies.",
       en: "Aged Scotch. Ingredients: blended whiskies.",
@@ -1380,6 +1381,7 @@ export const DISHES: Dish[] = [
     category: "drinks-liquor",
     name: "Chivas",
     i18nNames: { es: "Chivas", en: "Chivas", de: "Chivas", fr: "Chivas" },
+    priceGlass: 5.0,
     descriptions: {
       es: "Whisky blended. Ingredientes: whiskies de malta y grano.",
       en: "Blended whisky. Ingredients: malt & grain whiskies.",
@@ -1398,6 +1400,7 @@ export const DISHES: Dish[] = [
       de: "Buchanan’s",
       fr: "Buchanan’s",
     },
+    priceGlass: 6.0,
     descriptions: {
       es: "Scotch blended. Ingredientes: whiskies de malta y grano.",
       en: "Blended Scotch. Ingredients: malt & grain whiskies.",
@@ -1411,6 +1414,7 @@ export const DISHES: Dish[] = [
     category: "drinks-liquor",
     name: "Gordon’s",
     i18nNames: { es: "Gordon’s", en: "Gordon’s", de: "Gordon’s", fr: "Gordon’s" },
+    priceGlass: 3.0,
     descriptions: {
       es: "Ginebra clásica. Ingredientes: destilado de grano, enebro, botánicos.",
       en: "Classic gin. Ingredients: grain spirit, juniper, botanicals.",
@@ -1424,6 +1428,7 @@ export const DISHES: Dish[] = [
     category: "drinks-liquor",
     name: "Hendrick’s",
     i18nNames: { es: "Hendrick’s", en: "Hendrick’s", de: "Hendrick’s", fr: "Hendrick’s" },
+    priceGlass: 6.0,
     descriptions: {
       es: "Ginebra premium. Ingredientes: botánicos, pepino, rosa.",
       en: "Premium gin. Ingredients: botanicals, cucumber, rose.",
@@ -1437,6 +1442,7 @@ export const DISHES: Dish[] = [
     category: "drinks-liquor",
     name: "Arehucas",
     i18nNames: { es: "Arehucas", en: "Arehucas", de: "Arehucas", fr: "Arehucas" },
+    priceGlass: 3.0,
     descriptions: {
       es: "Ron canario. Ingredientes: melaza de caña, envejecimiento.",
       en: "Canarian rum. Ingredients: cane molasses, aging.",
@@ -1455,6 +1461,7 @@ export const DISHES: Dish[] = [
       de: "Havana 3 Jahre",
       fr: "Havana 3 ans",
     },
+    priceShot: 2.0, priceGlass: 4.5,
     descriptions: {
       es: "Ron cubano. Ingredientes: melaza, añejamiento 3 años.",
       en: "Cuban rum. Ingredients: molasses, 3-year aging.",
@@ -1473,6 +1480,7 @@ export const DISHES: Dish[] = [
       de: "Ron Viejo de Caldas",
       fr: "Ron Viejo de Caldas",
     },
+    priceGlass: 4.5,
     descriptions: {
       es: "Ron colombiano. Ingredientes: melaza de caña, añejamiento.",
       en: "Colombian rum. Ingredients: cane molasses, aging.",
@@ -1491,6 +1499,7 @@ export const DISHES: Dish[] = [
       de: "Smirnoff Red",
       fr: "Smirnoff Red",
     },
+    priceShot: 2.0, priceGlass: 4.5,
     descriptions: {
       es: "Vodka clásico. Ingredientes: alcohol de grano, agua.",
       en: "Classic vodka. Ingredients: grain spirit, water.",
@@ -1509,6 +1518,7 @@ export const DISHES: Dish[] = [
       de: "Aguardiente Antioqueño (rot)",
       fr: "Aguardiente Antioqueño (rouge)",
     },
+    priceShot: 2.0,
     descriptions: {
       es: "Anisado colombiano. Ingredientes: alcohol, anís, azúcar.",
       en: "Colombian anis spirit. Ingredients: alcohol, anise, sugar.",
@@ -1527,6 +1537,7 @@ export const DISHES: Dish[] = [
       de: "Aguardiente Antioqueño (gelb)",
       fr: "Aguardiente Antioqueño (jaune)",
     },
+    priceShot: 2.0,
     descriptions: {
       es: "Anisado colombiano. Ingredientes: alcohol, anís, azúcar.",
       en: "Colombian anis spirit. Ingredients: alcohol, anise, sugar.",
@@ -1545,6 +1556,7 @@ export const DISHES: Dish[] = [
       de: "Aguardiente Antioqueño (blau)",
       fr: "Aguardiente Antioqueño (bleu)",
     },
+    priceShot: 2.0,
     descriptions: {
       es: "Anisado colombiano. Ingredientes: alcohol, anís, azúcar.",
       en: "Colombian anis spirit. Ingredients: alcohol, anise, sugar.",
@@ -1563,6 +1575,7 @@ export const DISHES: Dish[] = [
       de: "Aguardiente del Valle",
       fr: "Aguardiente del Valle",
     },
+    priceShot: 2.0,
     descriptions: {
       es: "Aguardiente vallecaucano. Ingredientes: alcohol, anís, azúcar.",
       en: "Anis spirit from Valle del Cauca. Ingredients: alcohol, anise, sugar.",
@@ -1576,6 +1589,7 @@ export const DISHES: Dish[] = [
     category: "drinks-liquor",
     name: "Jägermeister",
     i18nNames: { es: "Jägermeister", en: "Jägermeister", de: "Jägermeister", fr: "Jägermeister" },
+    priceShot: 2.0,priceGlass: 3.5,
     descriptions: {
       es: "Licor de hierbas. Ingredientes: macerado de hierbas, especias.",
       en: "Herbal liqueur. Ingredients: herbs & spices maceration.",
@@ -1589,6 +1603,7 @@ export const DISHES: Dish[] = [
     category: "drinks-liquor",
     name: "Baileys",
     i18nNames: { es: "Baileys", en: "Baileys", de: "Baileys", fr: "Baileys" },
+    priceShot: 2.5,priceGlass: 4.0,
     descriptions: {
       es: "Crema irlandesa. Ingredientes: crema de leche, whisky, azúcar.",
       en: "Irish cream. Ingredients: dairy cream, whisky, sugar.",

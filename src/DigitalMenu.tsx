@@ -93,7 +93,7 @@ const I18N: Record<
     collapseAll: "Collapse all",
     priceLabels: {
       shot: "Shot",
-      glass: "Mixed drink",
+      glass: "Glass",
       halfChicken: "Half chicken",
       wholeChicken: "Whole chicken",
     },
@@ -617,6 +617,13 @@ export default function DigitalMenu() {
           const isOpen = openCats.has(cat);
           const t = I18N[lang].categories[cat];
           const accent = CAT_COLORS[cat];
+          const isDrink =
+            cat === "drinks-soft" ||
+            cat === "drinks-beer" ||
+            cat === "drinks-water" ||
+            cat === "drinks-coffee" ||
+            cat === "drinks-liquor" ||
+            cat === "drinks-wine";
 
           return (
             <section
@@ -624,7 +631,7 @@ export default function DigitalMenu() {
               className="mb-6"
               ref={(el) => (sectionRefs.current[cat] = el)}
             >
-              {/* Botón normal (la barra fija hace el "sticky") */}
+              {/* Botón de categoría (desplegable) */}
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}
@@ -650,7 +657,7 @@ export default function DigitalMenu() {
                 />
               </button>
 
-              {/* Contenido */}
+              {/* Contenido desplegable */}
               <AnimatePresence initial={false}>
                 {isOpen && (
                   <motion.div
@@ -662,15 +669,66 @@ export default function DigitalMenu() {
                     className="overflow-hidden"
                   >
                     <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-                      {items.map((dish) => (
-                        <DishCard
-                          key={dish.id}
-                          dish={dish}
-                          lang={lang}
-                          isOpen={openCards.has(dish.id)}
-                          onToggle={() => toggleCard(dish.id)}
-                        />
-                      ))}
+                      {items.map((dish) =>
+                        isDrink ? (
+                          <div
+                            key={dish.id}
+                            className="relative group rounded-2xl border border-white/50 bg-white/90 p-4 shadow-sm ring-1 ring-black/5"
+                            style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}
+                          >
+                            {/* Línea de color arriba */}
+                            <div
+                              aria-hidden
+                              className="pointer-events-none absolute left-0 top-0 h-1 w-full rounded-t-2xl"
+                              style={{ background: accent }}
+                            />
+                            <div className="flex items-center justify-between gap-4">
+                              <div className="min-w-0">
+                                <div className="truncate text-lg font-semibold">
+                                  {dish.i18nNames?.[lang] ?? dish.name}
+                                </div>
+                                <div className="mt-1 text-sm text-gray-700">
+                                  {I18N[lang].categories[dish.category]}
+                                </div>
+                              </div>
+                              <div className="flex flex-col items-end gap-1">
+                                {/* Precio único */}
+                                {dish.price != null && (
+                                  <div className="whitespace-nowrap text-base font-semibold">
+                                    {formatEUR(dish.price, LOCALE_BY_LANG[lang])}
+                                  </div>
+                                )}
+                                {/* Precio chupito */}
+                                {dish.priceShot != null && (
+                                  <div className="text-xs text-gray-700">
+                                    {I18N[lang].priceLabels.shot}:{" "}
+                                    <span className="font-semibold">
+                                      {formatEUR(dish.priceShot, LOCALE_BY_LANG[lang])}
+                                    </span>
+                                  </div>
+                                )}
+                                {/* Precio copa */}
+                                {dish.priceGlass != null && (
+                                  <div className="text-xs text-gray-700">
+                                    {I18N[lang].priceLabels.glass}:{" "}
+                                    <span className="font-semibold">
+                                      {formatEUR(dish.priceGlass, LOCALE_BY_LANG[lang])}
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <DishCard
+                            key={dish.id}
+                            dish={dish}
+                            lang={lang}
+                            isOpen={openCards.has(dish.id)}
+                            onToggle={() => toggleCard(dish.id)}
+                          />
+                        )
+                      )}
                     </div>
                   </motion.div>
                 )}

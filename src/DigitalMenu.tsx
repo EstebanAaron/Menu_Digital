@@ -7,13 +7,9 @@ import { DISHES, CAT_COLORS, IMG, slug, Category, Dish, Lang } from "./dishes";
  * DigitalMenu.tsx — versión por secciones del PDF
  * Comida: Starters, Main Dishes, Grill, Dessert
  * Bebidas: Soft drinks, Beers, Waters, Coffee & infusions, Spirits & mixers, Wines
- * - Nombre traducido por idioma (ES/EN/DE/FR)
- * - Descripción breve con ingredientes (en los 4 idiomas)
- * - Precio vacío cuando no está claro
- * - Soporte de precios múltiples:
- *    · Licores: chupito / copa
- *    · Pollo: medio / entero
- * - Estilos mobile-first (Tailwind)
+ * - I18N (ES/EN/DE/FR)
+ * - Precios múltiples (chupito/copa, medio/entero)
+ * - Mobile-first (Tailwind)
  */
 
 const BG_URL = "img/11.jpg";
@@ -155,26 +151,25 @@ const I18N: Record<
   },
 };
 
-/* ===================== “Logo” con texto + SVG ===================== */
+/* ===================== Logo con texto + SVG ===================== */
 function LogoWordmark({ lang }: { lang: Lang }) {
   const title = "SAZÓN DE MI TIERRA";
   return (
-    <div className="relative select-none">
-      {/* Texto principal */}
+    <div className="relative select-none w-full max-w-[680px]">
+      {/* Texto centrado */}
       <div
         aria-hidden
-        className="uppercase font-extrabold tracking-wide text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.28)] leading-none"
+        className="uppercase font-extrabold tracking-wide text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.28)] leading-none text-center"
       >
         <span className="inline-block -skew-y-1 text-3xl sm:text-5xl">
           {title}
         </span>
       </div>
-      {/* Título accesible */}
       <h1 className="sr-only">
         {I18N[lang].menuTitle} Sazón de mi Tierra
       </h1>
 
-      {/* Guirnalda inferior */}
+      {/* Guirnalda */}
       <svg
         className="mt-2 h-7 sm:h-9 w-full text-white"
         viewBox="0 0 640 48"
@@ -417,10 +412,7 @@ function DishCard({
 export default function DigitalMenu() {
   const [openCards, setOpenCards] = useState<Set<string>>(new Set());
   const [openCats, setOpenCats] = useState<Set<Category>>(
-    () =>
-      new Set([
-        // por defecto todas cerradas
-      ])
+    () => new Set([])
   );
   const [lang, setLang] = useState<Lang>(() => {
     if (typeof window !== "undefined") {
@@ -532,44 +524,46 @@ export default function DigitalMenu() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-5 sm:mb-8 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-          <div className="flex items-center">
+        {/* Header centrado: grid 3 columnas (espaciador / logo centrado / controles) */}
+        <header className="mb-5 sm:mb-8 grid grid-cols-1 sm:grid-cols-3 items-center gap-3">
+          <div className="hidden sm:block" /> {/* espaciador izquierdo */}
+          <div className="justify-self-center w-full">
             <LogoWordmark lang={lang} />
           </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setAllCats(true)}
-              className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm hover:bg-white"
-            >
-              {I18N[lang].expandAll}
-            </button>
-            <button
-              onClick={() => setAllCats(false)}
-              className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm hover:bg-white"
-            >
-              {I18N[lang].collapseAll}
-            </button>
-
-            <label className="ml-2 flex items-center gap-2 rounded-xl border border-white/50 bg-white/90 px-3 py-2 shadow-sm">
-              <Globe className="h-4 w-4" aria-hidden />
-              <span className="text-sm text-gray-700">
-                {I18N[lang].languageLabel}
-              </span>
-              <select
-                className="ml-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-sm focus:outline-none"
-                value={lang}
-                onChange={(e) => setLang(e.target.value as Lang)}
-                aria-label="Seleccionar idioma"
+          <div className="justify-self-end">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setAllCats(true)}
+                className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm hover:bg-white"
               >
-                {(["es", "en", "de", "fr"] as Lang[]).map((code) => (
-                  <option key={code} value={code}>
-                    {LANG_LABEL[code]}
-                  </option>
-                ))}
-              </select>
-            </label>
+                {I18N[lang].expandAll}
+              </button>
+              <button
+                onClick={() => setAllCats(false)}
+                className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm hover:bg-white"
+              >
+                {I18N[lang].collapseAll}
+              </button>
+
+              <label className="ml-2 flex items-center gap-2 rounded-xl border border-white/50 bg-white/90 px-3 py-2 shadow-sm">
+                <Globe className="h-4 w-4" aria-hidden />
+                <span className="text-sm text-gray-700">
+                  {I18N[lang].languageLabel}
+                </span>
+                <select
+                  className="ml-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-sm focus:outline-none"
+                  value={lang}
+                  onChange={(e) => setLang(e.target.value as Lang)}
+                  aria-label="Seleccionar idioma"
+                >
+                  {(["es", "en", "de", "fr"] as Lang[]).map((code) => (
+                    <option key={code} value={code}>
+                      {LANG_LABEL[code]}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
           </div>
         </header>
 
@@ -582,11 +576,13 @@ export default function DigitalMenu() {
 
           return (
             <section key={cat} className="mb-6">
-              {/* Encabezado de categoría */}
+              {/* Encabezado de categoría con STICKY nativo (solo si está abierta) */}
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}
-                className="group flex w-full items-center justify-between rounded-xl border border-white/60 bg-white/90 px-4 py-3 shadow-sm hover:bg-white backdrop-blur-md"
+                className={`group flex w-full items-center justify-between rounded-xl border border-white/60 bg-white/90 px-4 py-3 shadow-sm hover:bg-white backdrop-blur-md ${
+                  isOpen ? "sticky top-0 z-30" : ""
+                }`}
                 style={{
                   boxShadow:
                     "0 1px 0 rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.06)",

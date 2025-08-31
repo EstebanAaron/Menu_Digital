@@ -87,7 +87,7 @@ export const DISHES: Dish[] = [
       de: "Knuspriger Maisteig mit hausgemachter Füllung (Fleisch & Zwiebel). Zutaten: Maismehl, Fleisch, Zwiebel, Gewürze, Öl.",
       fr: "Pâte de maïs frite avec farce maison (viande & oignon). Ingrédients : farine de maïs, viande, oignon, épices, huile.",
     },
-    image: "public/img/platos/empanada.jpg",
+    image: "img/platos/empanada.jpg",
   },
   {
     id: slug("Papa rellena"),
@@ -144,7 +144,7 @@ export const DISHES: Dish[] = [
       de: "Mais-Arepa mit knuspriger Schweineschwarte. Zutaten: Maismehl, Schweineschwarte, Salz.",
       fr: "Arepa de maïs au chicharrón croustillant. Ingrédients : farine de maïs, couenne de porc, sel.",
     },
-    image: "public/img/platos/arepa-chicharron.jpg",
+    image: "img/platos/arepa-chicharron.jpg",
   },
   {
     id: slug("Patacon con hogao"),
@@ -163,7 +163,7 @@ export const DISHES: Dish[] = [
       de: "Frittierte Kochbanane mit kreolischer Sauce. Zutaten: Kochbanane, Tomate, Zwiebel, Knoblauch, Öl.",
       fr: "Banane plantain frite avec sauce créole. Ingrédients : plantain vert, tomate, oignon, ail, huile.",
     },
-    image: "public/img/platos/patacon-hogao.jpg",
+    image: "img/platos/patacon-hogao.jpg",
   },
   {
     id: slug("Patacon con queso"),
@@ -239,7 +239,7 @@ export const DISHES: Dish[] = [
       de: "Cremig nach Hausart. Zutaten: Ei, Butter, Salz.",
       fr: "Crémeux, façon maison. Ingrédients : œuf, beurre, sel.",
     },
-    image: "public/img/platos/huevos.jpg",
+    image: "img/platos/huevos.jpg",
   },
   {
     id: slug("Escaldon"),
@@ -315,7 +315,7 @@ export const DISHES: Dish[] = [
       de: "Haussalat. Zutaten: Blattsalat-Mix, Tomate, Gurke, Zwiebel, Vinaigrette.",
       fr: "Salade maison. Ingrédients : mesclun, tomate, concombre, oignon, vinaigrette.",
     },
-    image: "public/img/platos/ensalada-sazon.jpg",
+    image: "img/platos/ensalada-sazon.jpg",
   },
 
   /* ---------- MAIN DISHES (incluye sopas del PDF) ---------- */
@@ -336,7 +336,7 @@ export const DISHES: Dish[] = [
       de: "Kolumbianischer Klassiker. Zutaten: Bohnen, Reis, Fleisch, Schwarte, Ei, Kochbanane, Arepa.",
       fr: "Classique colombien. Ingrédients : haricots, riz, viande, couenne, œuf, banane plantain, arepa.",
     },
-    image: "public/img/platos/bandeja-paisa.jpg",
+    image: "img/platos/bandeja-paisa.jpg",
   },
   {
     id: slug("Chuleta valluna"),
@@ -355,7 +355,7 @@ export const DISHES: Dish[] = [
       de: "Paniert und knusprig. Zutaten: Schweinekotelett, Paniermehl, Ei, Gewürze.",
       fr: "Panée et croustillante. Ingrédients : côte de porc, chapelure, œuf, épices.",
     },
-    image: "public/img/platos/valluna.jpg",
+    image: "img/platos/valluna.jpg",
   },
   {
     id: slug("Panceta asada"),
@@ -450,7 +450,7 @@ export const DISHES: Dish[] = [
       de: "Rustikale Beilage. Zutaten: Schweinerippen, Kartoffel, Mais, Gewürze.",
       fr: "Garniture rustique. Ingrédients : côtes de porc, pomme de terre, maïs, épices.",
     },
-    image: "public/img/platos/costilla-piña.jpg",
+    image: "img/platos/costilla-piña.jpg",
   },
   {
     id: slug("Carne de cabra"),
@@ -469,7 +469,7 @@ export const DISHES: Dish[] = [
       de: "Traditioneller Eintopf. Zutaten: Ziege, Tomate, Zwiebel, Knoblauch, Wein, Gewürze.",
       fr: "Ragoût traditionnel. Ingrédients : chèvre, tomate, oignon, ail, vin, épices.",
     },
-    image: "public/img/platos/carne-cabra.jpg",
+    image: "img/platos/carne-cabra.jpg",
   },
   {
     id: slug("Garbanzos"),
@@ -546,7 +546,7 @@ export const DISHES: Dish[] = [
       de: "Traditionelle Suppe. Zutaten: Huhn, Maniok, Kartoffel, Mais, Koriander.",
       fr: "Soupe traditionnelle. Ingrédients : poule, manioc, pomme de terre, maïs, coriandre.",
     },
-    image:"public/img/platos/sancocho-gallina.jpg",
+    image:"img/platos/sancocho-gallina.jpg",
   },
   {
     id: slug("Sancocho trifasico"),
@@ -604,7 +604,7 @@ export const DISHES: Dish[] = [
       de: "Kabeljaufilet mit geschmorten Zwiebeln. Zutaten: Kabeljau, Zwiebel, Olivenöl, Knoblauch, Petersilie, Salz.",
       fr: "Filet de morue aux oignons confits. Ingrédients : morue, oignon, huile d’olive, ail, persil, sel.",
     },
-    image: "public/img/platos/bacalao.jpg",
+    image: "img/platos/bacalao.jpg",
   },
   {
     id: slug("Pescado frito"),
@@ -663,7 +663,7 @@ export const DISHES: Dish[] = [
       de: "Von der Platte, saftig. Zutaten: Schweinefilet, Salz, Pfeffer, Öl.",
       fr: "Saisi, juteux. Ingrédients : filet de porc, sel, poivre, huile.",
     },
-    image: "public/img/platos/solomillo-cerdo.jpg",
+    image: "img/platos/solomillo-cerdo.jpg",
   },
   {
     id: slug("Entrecot de ternera"),
@@ -682,7 +682,7 @@ export const DISHES: Dish[] = [
       de: "Nach Wunsch. Zutaten: Entrecôte, Salz, Pfeffer, Öl.",
       fr: "À la demande. Ingrédients : entrecôte, sel, poivre, huile.",
     },
-    image: "public/img/platos/entrecot.jpg",
+    image: "img/platos/entrecot.jpg",
   },
   {
     id: slug("Secreto iberico"),
@@ -740,7 +740,7 @@ export const DISHES: Dish[] = [
       de: "Vom Grill. Zutaten: Hähnchen, Salz, Pfeffer, Knoblauch, Öl.",
       fr: "Au gril. Ingrédients : poulet, sel, poivre, ail, huile.",
     },
-    image: "public/img/platos/pollo.jpg",
+    image: "img/platos/pollo.jpg",
   },
   // === Nueva GRILL solicitada ===
   {

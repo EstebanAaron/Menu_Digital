@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, Globe } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { DISHES, CAT_COLORS, IMG, slug, Category, Dish, Lang } from "./dishes";
@@ -10,6 +10,7 @@ import { DISHES, CAT_COLORS, IMG, slug, Category, Dish, Lang } from "./dishes";
  * - I18N (ES/EN/DE/FR)
  * - Precios múltiples (chupito/copa, medio/entero)
  * - Mobile-first (Tailwind)
+ * - "Sticky" robusto con barra fija al hacer scroll dentro de una categoría abierta
  */
 
 const BG_URL = "img/11.jpg";
@@ -155,7 +156,7 @@ const I18N: Record<
 function LogoWordmark({ lang }: { lang: Lang }) {
   const title = "SAZÓN DE MI TIERRA";
   return (
-    <div className="relative select-none w-full max-w-[680px]">
+    <div className="relative select-none w-full max-w-[680px] mx-auto">
       {/* Texto centrado */}
       <div
         aria-hidden
@@ -428,6 +429,53 @@ export default function DigitalMenu() {
     }
   }, [lang]);
 
+  // ---------- ORDEN (lo usamos en varias partes) ----------
+  const order: Category[] = [
+    "starters",
+    "main",
+    "grill",
+    "dessert",
+    "drinks-soft",
+    "drinks-beer",
+    "drinks-water",
+    "drinks-coffee",
+    "drinks-liquor",
+    "drinks-wine",
+  ];
+
+  // ---------- Barra "sticky" robusta (fixed) ----------
+  const sectionRefs = useRef<Partial<Record<Category, HTMLElement | null>>>({});
+  const [stickyCat, setStickyCat] = useState<Category | null>(null);
+
+  useEffect(() => {
+    const handle = () => {
+      let candidate: { cat: Category; top: number } | null = null;
+      const TOP_OFFSET = 8;   // px desde la parte superior
+      const HIDE_AT = 56;     // cuando pasas el final de la sección
+
+      for (const cat of order) {
+        if (!openCats.has(cat)) continue;
+        const el = sectionRefs.current[cat];
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
+        if (r.top <= TOP_OFFSET && r.bottom > HIDE_AT) {
+          if (!candidate || r.top > candidate.top) {
+            candidate = { cat, top: r.top };
+          }
+        }
+      }
+      setStickyCat(candidate ? candidate.cat : null);
+    };
+
+    window.addEventListener("scroll", handle, { passive: true });
+    window.addEventListener("resize", handle);
+    handle(); // inicial
+    return () => {
+      window.removeEventListener("scroll", handle);
+      window.removeEventListener("resize", handle);
+    };
+  }, [openCats, order]);
+
   const toggleCard = (id: string) => {
     setOpenCards((prev) => {
       const next = new Set(prev);
@@ -447,38 +495,10 @@ export default function DigitalMenu() {
   };
 
   const setAllCats = (open: boolean) => {
-    setOpenCats(
-      open
-        ? new Set([
-            "starters",
-            "main",
-            "grill",
-            "dessert",
-            "drinks-soft",
-            "drinks-beer",
-            "drinks-water",
-            "drinks-coffee",
-            "drinks-liquor",
-            "drinks-wine",
-          ])
-        : new Set()
-    );
+    setOpenCats(open ? new Set(order) : new Set());
   };
 
-  // orden y agrupado por categoría PDF
-  const order: Category[] = [
-    "starters",
-    "main",
-    "grill",
-    "dessert",
-    "drinks-soft",
-    "drinks-beer",
-    "drinks-water",
-    "drinks-coffee",
-    "drinks-liquor",
-    "drinks-wine",
-  ];
-
+  // orden y agrupado por categoría
   const dishesSorted = useMemo(
     () =>
       [...DISHES].sort((a, b) => {
@@ -523,51 +543,75 @@ export default function DigitalMenu() {
         <div className="absolute inset-0 bg-white/20" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header centrado: grid 3 columnas (espaciador / logo centrado / controles) */}
-        <header className="mb-5 sm:mb-8 grid grid-cols-1 sm:grid-cols-3 items-center gap-3">
-          <div className="hidden sm:block" /> {/* espaciador izquierdo */}
-          <div className="justify-self-center w-full">
-            <LogoWordmark lang={lang} />
+      {/* Barra fija "sticky" que aparece cuando una categoría abierta ocupa el top */}
+      {stickyCat && (
+        <div className="fixed left-0 right-0 top-0 z-40 px-4 sm:px-6">
+          <div className="mx-auto max-w-5xl pt-2">
+            <button
+              onClick={() => toggleCategory(stickyCat)}
+              aria-expanded
+              className="flex w-full items-center justify-between rounded-xl border border-white/60 bg-white/90 px-4 py-3 shadow-lg backdrop-blur-md"
+              style={{
+                boxShadow:
+                  "0 2px 6px rgba(0,0,0,0.08), 0 6px 20px rgba(0,0,0,0.08)",
+              }}
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  className="inline-block h-3 w-3 rounded-full"
+                  style={{ background: CAT_COLORS[stickyCat] }}
+                  aria-hidden
+                />
+                <h2 className="text-base font-semibold text-gray-900">
+                  {I18N[lang].categories[stickyCat]}
+                </h2>
+              </div>
+              <ChevronDown className="h-5 w-5 rotate-180 text-gray-700" />
+            </button>
           </div>
-          <div className="justify-self-end">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setAllCats(true)}
-                className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm hover:bg-white"
-              >
-                {I18N[lang].expandAll}
-              </button>
-              <button
-                onClick={() => setAllCats(false)}
-                className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm hover:bg-white"
-              >
-                {I18N[lang].collapseAll}
-              </button>
+        </div>
+      )}
 
-              <label className="ml-2 flex items-center gap-2 rounded-xl border border-white/50 bg-white/90 px-3 py-2 shadow-sm">
-                <Globe className="h-4 w-4" aria-hidden />
-                <span className="text-sm text-gray-700">
-                  {I18N[lang].languageLabel}
-                </span>
-                <select
-                  className="ml-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-sm focus:outline-none"
-                  value={lang}
-                  onChange={(e) => setLang(e.target.value as Lang)}
-                  aria-label="Seleccionar idioma"
-                >
-                  {(["es", "en", "de", "fr"] as Lang[]).map((code) => (
-                    <option key={code} value={code}>
-                      {LANG_LABEL[code]}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
+      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-8">
+        {/* Header centrado */}
+        <header className="mb-5 sm:mb-8">
+          <LogoWordmark lang={lang} />
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:justify-end">
+            <button
+              onClick={() => setAllCats(true)}
+              className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm hover:bg-white"
+            >
+              {I18N[lang].expandAll}
+            </button>
+            <button
+              onClick={() => setAllCats(false)}
+              className="rounded-lg border border-white/50 bg-white/90 px-3 py-2 text-xs font-medium text-gray-800 shadow-sm hover:bg-white"
+            >
+              {I18N[lang].collapseAll}
+            </button>
+
+            <label className="ml-2 flex items-center gap-2 rounded-xl border border-white/50 bg-white/90 px-3 py-2 shadow-sm">
+              <Globe className="h-4 w-4" aria-hidden />
+              <span className="text-sm text-gray-700">
+                {I18N[lang].languageLabel}
+              </span>
+              <select
+                className="ml-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-sm focus:outline-none"
+                value={lang}
+                onChange={(e) => setLang(e.target.value as Lang)}
+                aria-label="Seleccionar idioma"
+              >
+                {(["es", "en", "de", "fr"] as Lang[]).map((code) => (
+                  <option key={code} value={code}>
+                    {LANG_LABEL[code]}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
         </header>
 
-        {/* Secciones por categoría del PDF */}
+        {/* Secciones por categoría */}
         {order.map((cat) => {
           const items = grouped[cat];
           const isOpen = openCats.has(cat);
@@ -575,14 +619,16 @@ export default function DigitalMenu() {
           const accent = CAT_COLORS[cat];
 
           return (
-            <section key={cat} className="mb-6">
-              {/* Encabezado de categoría con STICKY nativo (solo si está abierta) */}
+            <section
+              key={cat}
+              className="mb-6"
+              ref={(el) => (sectionRefs.current[cat] = el)}
+            >
+              {/* Botón normal (la barra fija hace el "sticky") */}
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}
-                className={`group flex w-full items-center justify-between rounded-xl border border-white/60 bg-white/90 px-4 py-3 shadow-sm hover:bg-white backdrop-blur-md ${
-                  isOpen ? "sticky top-0 z-30" : ""
-                }`}
+                className="group flex w-full items-center justify-between rounded-xl border border-white/60 bg-white/90 px-4 py-3 shadow-sm hover:bg-white backdrop-blur-md"
                 style={{
                   boxShadow:
                     "0 1px 0 rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.06)",
@@ -604,7 +650,7 @@ export default function DigitalMenu() {
                 />
               </button>
 
-              {/* Contenido de la categoría */}
+              {/* Contenido */}
               <AnimatePresence initial={false}>
                 {isOpen && (
                   <motion.div

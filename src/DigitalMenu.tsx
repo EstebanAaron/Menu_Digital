@@ -153,26 +153,60 @@ const I18N: Record<
 };
 
 /* ===================== Logo con texto + SVG ===================== */
+function TeideBackdrop({
+  color = "rgba(255,255,255,0.30)",
+  className = "pointer-events-none absolute left-1/2 w-[92vw] max-w-[860px] h-28 sm:h-40",
+  stretchY = 1.4, // 1 = sin cambio; >1 alarga hacia arriba
+}: {
+  color?: string;
+  className?: string;
+  stretchY?: number;
+}) {
+  return (
+    <div
+      aria-hidden
+      className={className}
+      style={{
+        // Ancla la base y estira hacia arriba
+        transformOrigin: "bottom center",
+        transform: `translateX(-50%) scaleY(${stretchY})`,
+
+        // Color + silueta
+        background: color,
+        clipPath:
+          "polygon(0% 100%, 6% 82%, 12% 86%, 18% 74%, 24% 78%, 30% 64%, 36% 68%, 42% 56%, 48% 50%, 52% 52%, 58% 46%, 63% 58%, 70% 54%, 78% 66%, 86% 76%, 94% 84%, 100% 100%)",
+
+        filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.12))",
+      }}
+    />
+  );
+}
+
+
+
 function LogoWordmark({ lang }: { lang: Lang }) {
   const title = "SAZÓN DE MI TIERRA";
   return (
     <div className="relative select-none w-full max-w-[680px] mx-auto">
-      {/* Texto centrado */}
+      {/* Teide (detrás) */}
+      <TeideBackdrop color="rgba(00,00,00,0.60)" />
+
+      {/* Texto centrado por delante */}
       <div
-        aria-hidden
-        className="uppercase font-extrabold tracking-wide text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.28)] leading-none text-center"
+        className="relative z-10 uppercase font-extrabold tracking-wide text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.28)] leading-none text-center"
       >
         <span className="inline-block -skew-y-1 text-3xl sm:text-5xl Titulo">
           {title}
         </span>
       </div>
+
       <h1 className="sr-only">
         {I18N[lang].menuTitle} Sazón de mi Tierra
       </h1>
 
-      {/* Guirnalda */}
+      {/* Guirnalda decorativa (opcional, sigue delante) */}
       <svg
-        className="mt-2 h-7 sm:h-9 w-full text-white"
+        className="relative z-10 mt-2 h-7 sm:h-9 w-full text-white"
         viewBox="0 0 640 48"
         fill="none"
         role="img"
@@ -185,36 +219,21 @@ function LogoWordmark({ lang }: { lang: Lang }) {
           strokeLinecap="round"
           fill="none"
         />
-        {[
-          40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560,
-        ].map((x, i) => (
+        {[40,80,120,160,200,240,280,320,360,400,440,480,520,560].map((x,i)=>(
           <g key={x}>
-            <ellipse
-              cx={x}
-              cy={i % 2 === 0 ? 18 : 34}
-              rx="7"
-              ry="3.2"
-              transform={`rotate(${i % 2 === 0 ? -18 : 18}, ${x}, ${
-                i % 2 === 0 ? 18 : 34
-              })`}
-              fill="currentColor"
-            />
-            <ellipse
-              cx={x + 10}
-              cy={i % 2 === 0 ? 34 : 18}
-              rx="7"
-              ry="3.2"
-              transform={`rotate(${i % 2 === 0 ? 18 : -18}, ${x + 10}, ${
-                i % 2 === 0 ? 34 : 18
-              })`}
-              fill="currentColor"
-            />
+            <ellipse cx={x} cy={i%2===0?18:34} rx="7" ry="3.2"
+              transform={`rotate(${i%2===0?-18:18}, ${x}, ${i%2===0?18:34})`}
+              fill="currentColor" />
+            <ellipse cx={x+10} cy={i%2===0?34:18} rx="7" ry="3.2"
+              transform={`rotate(${i%2===0?18:-18}, ${x+10}, ${i%2===0?34:18})`}
+              fill="currentColor" />
           </g>
         ))}
       </svg>
     </div>
   );
 }
+
 
 /* ===================== Utilidades ===================== */
 function detectDeviceLang(): Lang {

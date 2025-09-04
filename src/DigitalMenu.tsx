@@ -272,7 +272,7 @@ function DishCard({
       tabIndex={0}
       onClick={onToggle}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onToggle()}
-      className="relative group rounded-2xl border border-white/50 bg-white/90 p-4 shadow-sm ring-1 ring-black/5 transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      className="relative group rounded-2xl border border-white/50 bg-white/85 p-4 shadow-sm ring-1 ring-black/5 transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
       style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}
     >
       <div
@@ -282,7 +282,7 @@ function DishCard({
       />
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
-          <div className="truncate text-lg font-semibold">{displayName}</div>
+          <div className="truncate text-lg categorias font-medium">{displayName}</div>
           <div className="mt-1 text-sm text-gray-700">
             {I18N[lang].categories[dish.category]}
           </div>
@@ -537,7 +537,7 @@ export default function DigitalMenu() {
           src={BG_URL}
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
-          style={{ width: "100vw", height: "100vh" }}
+          style={{ width: "100vw", height: "100vh", position: "absolute" }}
           loading="lazy"
         />
         <div className="absolute " />
@@ -550,7 +550,7 @@ export default function DigitalMenu() {
             <button
               onClick={() => toggleCategory(stickyCat)}
               aria-expanded
-              className="flex w-full items-center justify-between rounded-xl border border-white/60 bg-white/90 px-4 py-3 shadow-lg backdrop-blur-md"
+              className="flex w-full items-center justify-between rounded-xl border border-white/60 bg-white/70 px-4 py-3 shadow-lg backdrop-blur-md"
               style={{
                 boxShadow:
                   "0 2px 6px rgba(0,0,0,0.08), 0 6px 20px rgba(0,0,0,0.08)",
@@ -562,7 +562,7 @@ export default function DigitalMenu() {
                   style={{ background: CAT_COLORS[stickyCat] }}
                   aria-hidden
                 />
-                <h2 className="text-base font-semibold text-gray-900">
+                <h2 className="text-base font-semibold text-gray-900 categorias">
                   {I18N[lang].categories[stickyCat]}
                 </h2>
               </div>
@@ -635,7 +635,7 @@ export default function DigitalMenu() {
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}
-                className="group flex w-full items-center justify-between rounded-xl border border-white/60 bg-white/90 px-4 py-3 shadow-sm hover:bg-white backdrop-blur-md"
+                className="group flex w-full items-center justify-between rounded-xl border bg-slate-200/80 border-white/60 px-4 py-3 shadow-sm"
                 style={{
                   boxShadow:
                     "0 1px 0 rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.06)",
@@ -647,7 +647,7 @@ export default function DigitalMenu() {
                     style={{ background: accent }}
                     aria-hidden
                   />
-                  <h2 className="text-base font-semibold text-gray-900">{t}</h2>
+                  <h2 className="text-base font-bold text-black categorias">{t}</h2>
                 </div>
                 <ChevronDown
                   className={`h-5 w-5 text-gray-600 transition-transform duration-200 ${
@@ -684,7 +684,7 @@ export default function DigitalMenu() {
                             />
                             <div className="flex items-center justify-between gap-4">
                               <div className="min-w-0">
-                                <div className="truncate text-lg font-semibold">
+                                <div className="truncate text-lg font-bold categorias">
                                   {dish.i18nNames?.[lang] ?? dish.name}
                                 </div>
                                 <div className="mt-1 text-sm text-gray-700">

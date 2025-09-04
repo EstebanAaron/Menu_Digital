@@ -1,19 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, Globe } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { DISHES, CAT_COLORS, IMG, slug, Category, Dish, Lang } from "./dishes";
+import { DISHES, CAT_COLORS, Category, Dish, Lang } from "./dishes";
 
 /**
- * DigitalMenu.tsx — versión por secciones del PDF
- * Comida: Starters, Main Dishes, Grill, Dessert
- * Bebidas: Soft drinks, Beers, Waters, Coffee & infusions, Spirits & mixers, Wines
+ * DigitalMenu.tsx — secciones del menú
  * - I18N (ES/EN/DE/FR)
  * - Precios múltiples (chupito/copa, medio/entero)
  * - Mobile-first (Tailwind)
- * - "Sticky" robusto con barra fija al hacer scroll dentro de una categoría abierta
+ * - Fondo global: vertical en móvil / horizontal en escritorio o landscape
+ * - Header: imagen del Teide con tinte de color (sin polígonos)
  */
-
-const BG_URL = "img/11.png";
 
 /* ===================== I18N (UI) ===================== */
 const LANG_LABEL: Record<Lang, string> = {
@@ -49,8 +46,7 @@ const I18N: Record<
 > = {
   es: {
     menuTitle: "Menú",
-    subtitle:
-      "Toca un plato o una categoría para ver la imagen y los ingredientes.",
+    subtitle: "Toca un plato o una categoría para ver la imagen y los ingredientes.",
     languageLabel: "Idioma",
     categories: {
       starters: "Entrantes",
@@ -66,12 +62,7 @@ const I18N: Record<
     },
     expandAll: "Expandir todo",
     collapseAll: "Recoger todo",
-    priceLabels: {
-      shot: "Chupito",
-      glass: "Copa",
-      halfChicken: "1/2 pollo",
-      wholeChicken: "Pollo entero",
-    },
+    priceLabels: { shot: "Chupito", glass: "Copa", halfChicken: "1/2 pollo", wholeChicken: "Pollo entero" },
   },
   en: {
     menuTitle: "Menu",
@@ -91,17 +82,11 @@ const I18N: Record<
     },
     expandAll: "Expand all",
     collapseAll: "Collapse all",
-    priceLabels: {
-      shot: "Shot",
-      glass: "Glass",
-      halfChicken: "Half chicken",
-      wholeChicken: "Whole chicken",
-    },
+    priceLabels: { shot: "Shot", glass: "Glass", halfChicken: "Half chicken", wholeChicken: "Whole chicken" },
   },
   de: {
     menuTitle: "Menü",
-    subtitle:
-      "Tippe auf ein Gericht oder eine Kategorie für Foto und Zutaten.",
+    subtitle: "Tippe auf ein Gericht oder eine Kategorie für Foto und Zutaten.",
     languageLabel: "Sprache",
     categories: {
       starters: "Vorspeisen",
@@ -117,17 +102,11 @@ const I18N: Record<
     },
     expandAll: "Alle öffnen",
     collapseAll: "Alle schließen",
-    priceLabels: {
-      shot: "Shot",
-      glass: "Longdrink",
-      halfChicken: "Halbes Hähnchen",
-      wholeChicken: "Ganzes Hähnchen",
-    },
+    priceLabels: { shot: "Shot", glass: "Longdrink", halfChicken: "Halbes Hähnchen", wholeChicken: "Ganzes Hähnchen" },
   },
   fr: {
     menuTitle: "Menu",
-    subtitle:
-      "Touchez un plat ou une catégorie pour voir la photo et les ingrédients.",
+    subtitle: "Touchez un plat ou une catégorie pour voir la photo et les ingrédients.",
     languageLabel: "Langue",
     categories: {
       starters: "Entrées",
@@ -143,68 +122,67 @@ const I18N: Record<
     },
     expandAll: "Tout développer",
     collapseAll: "Tout réduire",
-    priceLabels: {
-      shot: "Shooter",
-      glass: "Verre",
-      halfChicken: "Demi-poulet",
-      wholeChicken: "Poulet entier",
-    },
+    priceLabels: { shot: "Shooter", glass: "Verre", halfChicken: "Demi-poulet", wholeChicken: "Poulet entier" },
   },
 };
 
-/* ===================== Logo con texto + SVG ===================== */
-function TeideBackdrop({
-  color = "rgba(255,255,255,0.30)",
-  className = "pointer-events-none absolute left-1/2 w-[92vw] max-w-[860px] h-28 sm:h-40",
-  stretchY = 1.4, // 1 = sin cambio; >1 alarga hacia arriba
+/* ===================== Header: Teide con tinte ===================== */
+/** Imagen del Teide con tinte por mezcla (conserva sombras del PNG). */
+function TeideTinted({
+  src = "img/teide.png",
+  // tint/opacity quedan por compatibilidad, pero no se renderiza overlay si opacity <= 0
+  tint = "#111827",
+  opacity = 0, 
+  className = "absolute left-1/2 w-[92vw] max-w-[860px] h-28 sm:h-40 -top-0 sm:-top-5",
 }: {
-  color?: string;
+  src?: string;
+  tint?: string;
+  opacity?: number;
   className?: string;
-  stretchY?: number;
 }) {
   return (
     <div
       aria-hidden
-      className={className}
-      style={{
-        // Ancla la base y estira hacia arriba
-        transformOrigin: "bottom center",
-        transform: `translateX(-50%) scaleY(${stretchY})`,
-
-        // Color + silueta
-        background: color,
-        clipPath:
-          "polygon(0% 100%, 6% 82%, 12% 86%, 18% 74%, 24% 78%, 30% 64%, 36% 68%, 42% 56%, 48% 50%, 52% 52%, 58% 46%, 63% 58%, 70% 54%, 78% 66%, 86% 76%, 94% 84%, 100% 100%)",
-
-        filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.12))",
-      }}
-    />
+      // z-0 garantiza que queda detrás; pointer-events-none evita clicks
+      className={`pointer-events-none -translate-x-1/2 z-0 ${className}`}
+    >
+      <img
+        src={src}
+        alt=""
+        className="absolute inset-0 h-full w-full object-contain drop-shadow-md"
+        loading="lazy"
+      />
+      {/* No pintamos overlay si opacity es 0 */}
+      {opacity > 0 && (
+        <div
+          className="absolute inset-0"
+          style={{ background: tint, mixBlendMode: "multiply", opacity }}
+        />
+      )}
+    </div>
   );
 }
-
-
 
 function LogoWordmark({ lang }: { lang: Lang }) {
   const title = "SAZÓN DE MI TIERRA";
   return (
     <div className="relative select-none w-full max-w-[680px] mx-auto">
-      {/* Teide (detrás) */}
-      <TeideBackdrop color="rgba(00,00,00,0.60)" />
+      {/* Teide detrás del texto */}
+      <TeideTinted
+        // si quieres moverlo un poco hacia abajo usa, por ejemplo: className="absolute left-1/2 w-[92vw] max-w-[860px] h-28 sm:h-40 top-2 sm:-top-6"
+        opacity={0} // sin tinte
+      />
 
-      {/* Texto centrado por delante */}
-      <div
-        className="relative z-10 uppercase font-extrabold tracking-wide text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.28)] leading-none text-center"
-      >
+      {/* Texto delante */}
+      <div className="relative z-10 uppercase font-extrabold tracking-wide text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.28)] leading-none text-center">
         <span className="inline-block -skew-y-1 text-3xl sm:text-5xl Titulo">
           {title}
         </span>
       </div>
 
-      <h1 className="sr-only">
-        {I18N[lang].menuTitle} Sazón de mi Tierra
-      </h1>
+      <h1 className="sr-only">{I18N[lang].menuTitle} Sazón de mi Tierra</h1>
 
-      {/* Guirnalda decorativa (opcional, sigue delante) */}
+      {/* Guirnalda */}
       <svg
         className="relative z-10 mt-2 h-7 sm:h-9 w-full text-white"
         viewBox="0 0 640 48"
@@ -217,7 +195,6 @@ function LogoWordmark({ lang }: { lang: Lang }) {
           stroke="currentColor"
           strokeWidth="4"
           strokeLinecap="round"
-          fill="none"
         />
         {[40,80,120,160,200,240,280,320,360,400,440,480,520,560].map((x,i)=>(
           <g key={x}>
@@ -234,43 +211,28 @@ function LogoWordmark({ lang }: { lang: Lang }) {
   );
 }
 
-// Tipado de categorías actuales
-type CategoryKey =
-  | "starters"
-  | "main"
-  | "grill"
-  | "dessert"
-  | "drinks-soft"
-  | "drinks-beer"
-  | "drinks-water"
-  | "drinks-coffee"
-  | "drinks-liquor"
-  | "drinks-wine";
 
-// Un único componente para todas las formas (SVG puros, sin dependencias)
+/* ===================== Iconos de categorías (usa el tipo Category) ===================== */
 function CategoryIcon({
   category,
   color = "#111827",
   size = 20,
   className = "",
 }: {
-  category: CategoryKey;
+  category: Category;
   color?: string;
   size?: number;
   className?: string;
 }) {
   switch (category) {
-    case "starters": {
-      // Bol/platillo ligero
+    case "starters":
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 11h16a8 8 0 0 1-16 0Z" fill={color} />
           <path d="M7 8h10" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
         </svg>
       );
-    }
-    case "main": {
-      // Cloche (plato principal)
+    case "main":
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 13h16a8 8 0 0 0-16 0Z" fill={color} />
@@ -278,18 +240,14 @@ function CategoryIcon({
           <circle cx="12" cy="7.2" r="1.2" fill={color} />
         </svg>
       );
-    }
-    case "grill": {
-      // Llama + parrilla
+    case "grill":
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 5c2.2 2 2.6 3.8 1.4 5.6 1.4-.5 2.6-1.8 2.6-3.6 1.8 1.7 2.2 5-1.2 7.2-2.7 1.8-6.2.8-7.4-1.8C6.2 9.6 9 6.7 12 5Z" fill={color}/>
-          <path d="M5 17h14M6.5 19h11" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+          <path d="M12 5c2.2 2 2.6 3.8 1.4 5.6 1.4-.5 2.6-1.8 2.6-3.6 1.8 1.7 2.2 5-1.2 7.2-2.7 1.8-6.2.8-7.4-1.8C6.2 9.6 9 6.7 12 5Z" fill={color} />
+          <path d="M5 17h14M6.5 19h11" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
         </svg>
       );
-    }
-    case "dessert": {
-      // Porción de tarta
+    case "dessert":
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
           <path d="M3 16l9-7 9 7H3Z" fill={color} />
@@ -297,99 +255,67 @@ function CategoryIcon({
           <circle cx="12" cy="7" r="1.6" fill={color} />
         </svg>
       );
-    }
-    case "drinks-soft": {
-      // Refresco: lata + burbujas
+    case "drinks-soft":
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="8" y="6.5" width="8" height="11" rx="1.6" fill={color}/>
-          <path d="M12 5l3-1" stroke={color} strokeWidth="1.6" strokeLinecap="round"/>
-          <circle cx="10" cy="11" r="0.9" fill="white" opacity="0.8"/>
-          <circle cx="12" cy="13.4" r="0.9" fill="white" opacity="0.8"/>
-          <circle cx="14" cy="10.6" r="0.9" fill="white" opacity="0.8"/>
+          <rect x="8" y="6.5" width="8" height="11" rx="1.6" fill={color} />
+          <path d="M12 5l3-1" stroke={color} strokeWidth="1.6" strokeLinecap="round" />
+          <circle cx="10" cy="11" r="0.9" fill="white" opacity="0.8" />
+          <circle cx="12" cy="13.4" r="0.9" fill="white" opacity={0.8} />
+          <circle cx="14" cy="10.6" r="0.9" fill="white" opacity={0.8} />
         </svg>
       );
-    }
-    case "drinks-beer": {
-      // Jarra de cerveza con espuma
+    case "drinks-beer":
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M8 9h7.5a1.5 1.5 0 0 1 1.5 1.5V18a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V9Z" fill={color}/>
-          <rect x="15.5" y="10" width="3" height="5.5" rx="1.3" fill={color}/>
-          <path d="M8.5 7.8c.7-1.1 2.3-1.6 3.6-.9.8-.8 2.1-.9 3.1-.2.9-.4 2-.1 2.6.7" stroke={color} strokeWidth="1.6" strokeLinecap="round" fill="none"/>
+          <path d="M8 9h7.5a1.5 1.5 0 0 1 1.5 1.5V18a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V9Z" fill={color} />
+          <rect x="15.5" y="10" width="3" height="5.5" rx="1.3" fill={color} />
+          <path d="M8.5 7.8c.7-1.1 2.3-1.6 3.6-.9.8-.8 2.1-.9 3.1-.2.9-.4 2-.1 2.6.7" stroke={color} strokeWidth="1.6" strokeLinecap="round" fill="none" />
         </svg>
       );
-    }
-    case "drinks-water": {
-      // Gota de agua
+    case "drinks-water":
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 4c3 4 5.5 6.7 5.5 9.3A5.5 5.5 0 1 1 6.5 13.3C6.5 10.7 9 8 12 4Z" fill={color}/>
-          <path d="M14.6 13.2c-.5 1.6-2 2.6-3.8 2.5" stroke="white" strokeOpacity="0.7" strokeWidth="1.4" strokeLinecap="round"/>
+          <path d="M12 4c3 4 5.5 6.7 5.5 9.3A5.5 5.5 0 1 1 6.5 13.3C6.5 10.7 9 8 12 4Z" fill={color} />
+          <path d="M14.6 13.2c-.5 1.6-2 2.6-3.8 2.5" stroke="white" strokeOpacity="0.7" strokeWidth="1.4" strokeLinecap="round" />
         </svg>
       );
-    }
-    case "drinks-coffee": {
-      // Taza con vapor
+    case "drinks-coffee":
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6 10h8.5a3.5 3.5 0 1 1 0 7H9a3 3 0 0 1-3-3v-4Z" fill={color}/>
+          <path d="M6 10h8.5a3.5 3.5 0 1 1 0 7H9a3 3 0 0 1-3-3v-4Z" fill={color} />
           <path d="M15.5 12.2h1.6a1.8 1.8 0 1 1 0 3.6H15.5" stroke="white" strokeOpacity="0.85" strokeWidth="1.6" />
-          <path d="M9 7.2c.8-.5.9-1.2.5-1.8M11 7.2c.8-.5.9-1.2.5-1.8" stroke={color} strokeWidth="1.6" strokeLinecap="round" fill="none"/>
+          <path d="M9 7.2c.8-.5.9-1.2.5-1.8M11 7.2c.8-.5.9-1.2.5-1.8" stroke={color} strokeWidth="1.6" strokeLinecap="round" fill="none" />
         </svg>
       );
-    }
-    case "drinks-liquor": {
-      // Vaso corto / chupito
+    case "drinks-liquor":
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7.5 7h9l-1.8 10.2A2 2 0 0 1 12.8 19h-1.6a2 2 0 0 1-1.9-1.8L7.5 7Z" fill={color}/>
-          <path d="M8.2 10h7.6" stroke="white" strokeOpacity="0.7" strokeWidth="1.4"/>
+          <path d="M7.5 7h9l-1.8 10.2A2 2 0 0 1 12.8 19h-1.6a2 2 0 0 1-1.9-1.8L7.5 7Z" fill={color} />
+          <path d="M8.2 10h7.6" stroke="white" strokeOpacity="0.7" strokeWidth="1.4" />
         </svg>
       );
-    }
-    case "drinks-wine": {
-      // Copa de vino
+    case "drinks-wine":
       return (
         <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M8 6h8v2.5a4 4 0 0 1-4 4 4 4 0 0 1-4-4V6Z" fill={color}/>
-          <path d="M12 12.5v5.5M9.5 18h5" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+          <path d="M8 6h8v2.5a4 4 0 0 1-4 4 4 4 0 0 1-4-4V6Z" fill={color} />
+          <path d="M12 12.5v5.5M9.5 18h5" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
         </svg>
       );
-    }
-    default: {
-      // Fallback por si en el futuro aparece una categoría no prevista
-      return (
-        <span
-          className={`inline-block rounded-full ${className}`}
-          style={{ width: size * 0.7, height: size * 0.7, background: color }}
-          aria-hidden
-        />
-      );
-    }
+    default:
+      return <span className={`inline-block rounded-full ${className}`} style={{ width: size * 0.7, height: size * 0.7, background: color }} aria-hidden />;
   }
 }
-
-
-
 
 
 /* ===================== Utilidades ===================== */
 function detectDeviceLang(): Lang {
   const supported: Lang[] = ["es", "en", "de", "fr"];
   const pick = (code?: string) => code?.slice(0, 2).toLowerCase();
-  const fromNavigator = pick(
-    typeof navigator !== "undefined" ? navigator.language : ""
-  );
-  if (fromNavigator && supported.includes(fromNavigator as Lang))
-    return fromNavigator as Lang;
-  if (
-    typeof navigator !== "undefined" &&
-    Array.isArray((navigator as any).languages)
-  ) {
-    const match = (navigator as any).languages
-      .map(pick)
-      .find((l: string) => supported.includes(l as Lang));
+  const fromNavigator = pick(typeof navigator !== "undefined" ? navigator.language : "");
+  if (fromNavigator && supported.includes(fromNavigator as Lang)) return fromNavigator as Lang;
+  if (typeof navigator !== "undefined" && Array.isArray((navigator as any).languages)) {
+    const match = (navigator as any).languages.map(pick).find((l: string) => supported.includes(l as Lang));
     if (match) return match as Lang;
   }
   return "es";
@@ -397,10 +323,7 @@ function detectDeviceLang(): Lang {
 
 function formatEUR(value?: number | null, locale = "es-ES") {
   if (value === null || value === undefined || Number.isNaN(value)) return "";
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: "EUR",
-  }).format(value);
+  return new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(value);
 }
 
 /* ===================== Tarjeta ===================== */
@@ -415,10 +338,7 @@ function DishCard({
   isOpen: boolean;
   onToggle: () => void;
 }) {
-  const displayName =
-    dish.i18nNames && dish.i18nNames[lang]
-      ? (dish.i18nNames[lang] as string)
-      : dish.name;
+  const displayName = dish.i18nNames?.[lang] ?? dish.name;
   const description = dish.descriptions[lang] || dish.descriptions.en;
 
   const hasDual = dish.priceShot != null || dish.priceGlass != null;
@@ -526,10 +446,8 @@ function DishCard({
               </div>
 
               <div>
-                {/* Texto */}
                 <p className="leading-relaxed text-gray-800">{description}</p>
 
-                {/* Repetimos precios como chips si hay múltiples */}
                 {(hasDual || hasHalfWhole) && (
                   <div className="mt-4 flex flex-wrap gap-2">
                     {hasDual && dish.priceShot != null && (
@@ -570,9 +488,7 @@ function DishCard({
 /* ===================== Componente principal ===================== */
 export default function DigitalMenu() {
   const [openCards, setOpenCards] = useState<Set<string>>(new Set());
-  const [openCats, setOpenCats] = useState<Set<Category>>(
-    () => new Set([])
-  );
+  const [openCats, setOpenCats] = useState<Set<Category>>(() => new Set([]));
   const [lang, setLang] = useState<Lang>(() => {
     if (typeof window !== "undefined") {
       const saved = window.localStorage.getItem("menu:lang") as Lang | null;
@@ -587,7 +503,6 @@ export default function DigitalMenu() {
     }
   }, [lang]);
 
-  // ---------- ORDEN (lo usamos en varias partes) ----------
   const order: Category[] = [
     "starters",
     "main",
@@ -601,15 +516,15 @@ export default function DigitalMenu() {
     "drinks-wine",
   ];
 
-  // ---------- Barra "sticky" robusta (fixed) ----------
+  // ---------- Barra "sticky" ----------
   const sectionRefs = useRef<Partial<Record<Category, HTMLElement | null>>>({});
   const [stickyCat, setStickyCat] = useState<Category | null>(null);
 
   useEffect(() => {
     const handle = () => {
       let candidate: { cat: Category; top: number } | null = null;
-      const TOP_OFFSET = 8;   // px desde la parte superior
-      const HIDE_AT = 56;     // cuando pasas el final de la sección
+      const TOP_OFFSET = 8;
+      const HIDE_AT = 56;
 
       for (const cat of order) {
         if (!openCats.has(cat)) continue;
@@ -617,9 +532,7 @@ export default function DigitalMenu() {
         if (!el) continue;
         const r = el.getBoundingClientRect();
         if (r.top <= TOP_OFFSET && r.bottom > HIDE_AT) {
-          if (!candidate || r.top > candidate.top) {
-            candidate = { cat, top: r.top };
-          }
+          if (!candidate || r.top > candidate.top) candidate = { cat, top: r.top };
         }
       }
       setStickyCat(candidate ? candidate.cat : null);
@@ -627,7 +540,7 @@ export default function DigitalMenu() {
 
     window.addEventListener("scroll", handle, { passive: true });
     window.addEventListener("resize", handle);
-    handle(); // inicial
+    handle();
     return () => {
       window.removeEventListener("scroll", handle);
       window.removeEventListener("resize", handle);
@@ -656,7 +569,7 @@ export default function DigitalMenu() {
     setOpenCats(open ? new Set(order) : new Set());
   };
 
-  // orden y agrupado por categoría
+  // orden y agrupado
   const dishesSorted = useMemo(
     () =>
       [...DISHES].sort((a, b) => {
@@ -689,44 +602,49 @@ export default function DigitalMenu() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden">
-      {/* Fondo */}
+      {/* ===== Fondo global: horizontal en escritorio/landscape, vertical por defecto ===== */}
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
-        <img
-          src={BG_URL}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{ width: "100vw", height: "100vh", position: "absolute" }}
-          loading="lazy"
-        />
-        <div className="absolute " />
+        <picture>
+          {/* escritorio o landscape */}
+          <source srcSet="img/horizontal.png" media="(min-aspect-ratio: 4/3)" />
+          <source srcSet="img/horizontal.png" media="(orientation: landscape)" />
+          {/* móvil / vertical */}
+          <img
+            src="img/11.png"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+          />
+        </picture>
+        {/* overlay para legibilidad */}
+        <div className="absolute inset-0 bg-white/14" />
       </div>
 
-      {/* Barra fija "sticky" que aparece cuando una categoría abierta ocupa el top */}
+      {/* Barra fija "sticky" */}
       {stickyCat && (
         <div className="fixed left-0 right-0 top-0 z-40 px-4 sm:px-6">
           <div className="mx-auto max-w-5xl pt-2">
             <button
               onClick={() => toggleCategory(stickyCat)}
-              aria-expanded
+              aria-expanded={true}
               className="flex w-full items-center justify-between rounded-xl border border-white/60 bg-white/70 px-4 py-3 shadow-lg backdrop-blur-md"
               style={{
-                boxShadow:
-                  "0 2px 6px rgba(0,0,0,0.08), 0 6px 20px rgba(0,0,0,0.08)",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.08), 0 6px 20px rgba(0,0,0,0.08)",
               }}
             >
-                <div className="flex items-center gap-3">
-                <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white/00 ring-black/5">
+              <div className="flex items-center gap-3">
+                <div className="flex h-7 w-7 items-center justify-center rounded-md">
                   <CategoryIcon
-                  category={stickyCat as CategoryKey}
-                  color={CAT_COLORS[stickyCat]}
-                  size={40}
-                  className="shrink-0"
+                    category={stickyCat}
+                    color={CAT_COLORS[stickyCat]}
+                    size={40}
+                    className="shrink-0"
                   />
                 </div>
                 <h2 className="text-base font-semibold text-gray-900 categorias">
                   {I18N[lang].categories[stickyCat]}
                 </h2>
-                </div>
+              </div>
               <ChevronDown className="h-5 w-5 rotate-180 text-gray-700" />
             </button>
           </div>
@@ -734,7 +652,7 @@ export default function DigitalMenu() {
       )}
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header centrado */}
+        {/* Header */}
         <header className="mb-5 sm:mb-8">
           <LogoWordmark lang={lang} />
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:justify-end">
@@ -753,9 +671,7 @@ export default function DigitalMenu() {
 
             <label className="ml-2 flex items-center gap-2 rounded-xl border border-white/50 bg-white/90 px-3 py-2 shadow-sm">
               <Globe className="h-4 w-4" aria-hidden />
-              <span className="text-sm text-gray-700">
-                {I18N[lang].languageLabel}
-              </span>
+              <span className="text-sm text-gray-700">{I18N[lang].languageLabel}</span>
               <select
                 className="ml-1 rounded-md border border-gray-200 bg-white px-2 py-1 text-sm focus:outline-none"
                 value={lang}
@@ -787,36 +703,29 @@ export default function DigitalMenu() {
             cat === "drinks-wine";
 
           return (
-            <section
-              key={cat}
-              className="mb-6"
-              ref={(el) => (sectionRefs.current[cat] = el)}
-            >
-              {/* Botón de categoría (desplegable) */}
+            <section key={cat} className="mb-6" ref={(el) => (sectionRefs.current[cat] = el)}>
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}
                 className="group flex w-full items-center justify-between rounded-xl border bg-slate-200/80 border-white/60 px-4 py-3 shadow-sm"
                 style={{
-                  boxShadow:
-                    "0 1px 0 rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.06)",
+                  boxShadow: "0 1px 0 rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.06)",
                 }}
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white/00 ring-black/5">
-                    <CategoryIcon category={cat as CategoryKey} color={accent} size={45} className="shrink-0" />
+                  <div className="flex h-7 w-7 items-center justify-center rounded-md">
+                    <CategoryIcon category={cat} color={accent} size={45} className="shrink-0" />
                   </div>
-
                   <h2 className="text-base font-bold text-black categorias">{t}</h2>
                 </div>
                 <ChevronDown
-                  className={`h-5 w-5 text-gray-600 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"
-                    }`}
+                  className={`h-5 w-5 text-gray-600 transition-transform duration-200 ${
+                    isOpen ? "rotate-180" : "rotate-0"
+                  }`}
                   aria-hidden
                 />
               </button>
 
-              {/* Contenido desplegable */}
               <AnimatePresence initial={false}>
                 {isOpen && (
                   <motion.div
@@ -835,7 +744,6 @@ export default function DigitalMenu() {
                             className="relative group rounded-2xl border border-white/50 bg-white/90 p-4 shadow-sm ring-1 ring-black/5"
                             style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}
                           >
-                            {/* Línea de color arriba */}
                             <div
                               aria-hidden
                               className="pointer-events-none absolute left-0 top-0 h-1 w-full rounded-t-2xl"
@@ -851,13 +759,11 @@ export default function DigitalMenu() {
                                 </div>
                               </div>
                               <div className="flex flex-col items-end gap-1">
-                                {/* Precio único */}
                                 {dish.price != null && (
                                   <div className="whitespace-nowrap text-base font-semibold">
                                     {formatEUR(dish.price, LOCALE_BY_LANG[lang])}
                                   </div>
                                 )}
-                                {/* Precio chupito */}
                                 {dish.priceShot != null && (
                                   <div className="text-xs text-gray-700">
                                     {I18N[lang].priceLabels.shot}:{" "}
@@ -866,7 +772,6 @@ export default function DigitalMenu() {
                                     </span>
                                   </div>
                                 )}
-                                {/* Precio copa */}
                                 {dish.priceGlass != null && (
                                   <div className="text-xs text-gray-700">
                                     {I18N[lang].priceLabels.glass}:{" "}

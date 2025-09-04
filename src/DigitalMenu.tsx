@@ -13,7 +13,7 @@ import { DISHES, CAT_COLORS, IMG, slug, Category, Dish, Lang } from "./dishes";
  * - "Sticky" robusto con barra fija al hacer scroll dentro de una categoría abierta
  */
 
-const BG_URL = "img/11.jpg";
+const BG_URL = "img/11.png";
 
 /* ===================== I18N (UI) ===================== */
 const LANG_LABEL: Record<Lang, string> = {
@@ -162,7 +162,7 @@ function LogoWordmark({ lang }: { lang: Lang }) {
         aria-hidden
         className="uppercase font-extrabold tracking-wide text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.28)] leading-none text-center"
       >
-        <span className="inline-block -skew-y-1 text-3xl sm:text-5xl">
+        <span className="inline-block -skew-y-1 text-3xl sm:text-5xl Titulo">
           {title}
         </span>
       </div>
@@ -540,7 +540,7 @@ export default function DigitalMenu() {
           style={{ width: "100vw", height: "100vh" }}
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-white/20" />
+        <div className="absolute " />
       </div>
 
       {/* Barra fija "sticky" que aparece cuando una categoría abierta ocupa el top */}

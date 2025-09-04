@@ -14,3 +14,10 @@ h1{
 
 
 html, body, #root { height: 100%; }
+
+.Titulo {
+ 
+  margin-top: 1.8rem;
+  color: #ffffff;
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.993);
+}

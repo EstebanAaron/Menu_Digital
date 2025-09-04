@@ -719,7 +719,7 @@ export default function DigitalMenu() {
                   <CategoryIcon
                   category={stickyCat as CategoryKey}
                   color={CAT_COLORS[stickyCat]}
-                  size={28}
+                  size={40}
                   className="shrink-0"
                   />
                 </div>

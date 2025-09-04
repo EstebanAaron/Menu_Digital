@@ -234,6 +234,145 @@ function LogoWordmark({ lang }: { lang: Lang }) {
   );
 }
 
+// Tipado de categorías actuales
+type CategoryKey =
+  | "starters"
+  | "main"
+  | "grill"
+  | "dessert"
+  | "drinks-soft"
+  | "drinks-beer"
+  | "drinks-water"
+  | "drinks-coffee"
+  | "drinks-liquor"
+  | "drinks-wine";
+
+// Un único componente para todas las formas (SVG puros, sin dependencias)
+function CategoryIcon({
+  category,
+  color = "#111827",
+  size = 20,
+  className = "",
+}: {
+  category: CategoryKey;
+  color?: string;
+  size?: number;
+  className?: string;
+}) {
+  switch (category) {
+    case "starters": {
+      // Bol/platillo ligero
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 11h16a8 8 0 0 1-16 0Z" fill={color} />
+          <path d="M7 8h10" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+      );
+    }
+    case "main": {
+      // Cloche (plato principal)
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 13h16a8 8 0 0 0-16 0Z" fill={color} />
+          <rect x="3" y="13" width="18" height="2.2" rx="1.1" fill={color} />
+          <circle cx="12" cy="7.2" r="1.2" fill={color} />
+        </svg>
+      );
+    }
+    case "grill": {
+      // Llama + parrilla
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 5c2.2 2 2.6 3.8 1.4 5.6 1.4-.5 2.6-1.8 2.6-3.6 1.8 1.7 2.2 5-1.2 7.2-2.7 1.8-6.2.8-7.4-1.8C6.2 9.6 9 6.7 12 5Z" fill={color}/>
+          <path d="M5 17h14M6.5 19h11" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    case "dessert": {
+      // Porción de tarta
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 16l9-7 9 7H3Z" fill={color} />
+          <path d="M5 13h14" stroke="white" strokeOpacity="0.7" strokeWidth="1.6" />
+          <circle cx="12" cy="7" r="1.6" fill={color} />
+        </svg>
+      );
+    }
+    case "drinks-soft": {
+      // Refresco: lata + burbujas
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="8" y="6.5" width="8" height="11" rx="1.6" fill={color}/>
+          <path d="M12 5l3-1" stroke={color} strokeWidth="1.6" strokeLinecap="round"/>
+          <circle cx="10" cy="11" r="0.9" fill="white" opacity="0.8"/>
+          <circle cx="12" cy="13.4" r="0.9" fill="white" opacity="0.8"/>
+          <circle cx="14" cy="10.6" r="0.9" fill="white" opacity="0.8"/>
+        </svg>
+      );
+    }
+    case "drinks-beer": {
+      // Jarra de cerveza con espuma
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 9h7.5a1.5 1.5 0 0 1 1.5 1.5V18a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V9Z" fill={color}/>
+          <rect x="15.5" y="10" width="3" height="5.5" rx="1.3" fill={color}/>
+          <path d="M8.5 7.8c.7-1.1 2.3-1.6 3.6-.9.8-.8 2.1-.9 3.1-.2.9-.4 2-.1 2.6.7" stroke={color} strokeWidth="1.6" strokeLinecap="round" fill="none"/>
+        </svg>
+      );
+    }
+    case "drinks-water": {
+      // Gota de agua
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 4c3 4 5.5 6.7 5.5 9.3A5.5 5.5 0 1 1 6.5 13.3C6.5 10.7 9 8 12 4Z" fill={color}/>
+          <path d="M14.6 13.2c-.5 1.6-2 2.6-3.8 2.5" stroke="white" strokeOpacity="0.7" strokeWidth="1.4" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    case "drinks-coffee": {
+      // Taza con vapor
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 10h8.5a3.5 3.5 0 1 1 0 7H9a3 3 0 0 1-3-3v-4Z" fill={color}/>
+          <path d="M15.5 12.2h1.6a1.8 1.8 0 1 1 0 3.6H15.5" stroke="white" strokeOpacity="0.85" strokeWidth="1.6" />
+          <path d="M9 7.2c.8-.5.9-1.2.5-1.8M11 7.2c.8-.5.9-1.2.5-1.8" stroke={color} strokeWidth="1.6" strokeLinecap="round" fill="none"/>
+        </svg>
+      );
+    }
+    case "drinks-liquor": {
+      // Vaso corto / chupito
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7.5 7h9l-1.8 10.2A2 2 0 0 1 12.8 19h-1.6a2 2 0 0 1-1.9-1.8L7.5 7Z" fill={color}/>
+          <path d="M8.2 10h7.6" stroke="white" strokeOpacity="0.7" strokeWidth="1.4"/>
+        </svg>
+      );
+    }
+    case "drinks-wine": {
+      // Copa de vino
+      return (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 6h8v2.5a4 4 0 0 1-4 4 4 4 0 0 1-4-4V6Z" fill={color}/>
+          <path d="M12 12.5v5.5M9.5 18h5" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    default: {
+      // Fallback por si en el futuro aparece una categoría no prevista
+      return (
+        <span
+          className={`inline-block rounded-full ${className}`}
+          style={{ width: size * 0.7, height: size * 0.7, background: color }}
+          aria-hidden
+        />
+      );
+    }
+  }
+}
+
+
+
+
 
 /* ===================== Utilidades ===================== */
 function detectDeviceLang(): Lang {
@@ -575,16 +714,19 @@ export default function DigitalMenu() {
                   "0 2px 6px rgba(0,0,0,0.08), 0 6px 20px rgba(0,0,0,0.08)",
               }}
             >
-              <div className="flex items-center gap-3">
-                <span
-                  className="inline-block h-3 w-3 rounded-full"
-                  style={{ background: CAT_COLORS[stickyCat] }}
-                  aria-hidden
-                />
+                <div className="flex items-center gap-3">
+                <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white/00 ring-black/5">
+                  <CategoryIcon
+                  category={stickyCat as CategoryKey}
+                  color={CAT_COLORS[stickyCat]}
+                  size={28}
+                  className="shrink-0"
+                  />
+                </div>
                 <h2 className="text-base font-semibold text-gray-900 categorias">
                   {I18N[lang].categories[stickyCat]}
                 </h2>
-              </div>
+                </div>
               <ChevronDown className="h-5 w-5 rotate-180 text-gray-700" />
             </button>
           </div>
@@ -661,17 +803,15 @@ export default function DigitalMenu() {
                 }}
               >
                 <div className="flex items-center gap-3">
-                  <span
-                    className="inline-block h-3 w-3 rounded-full"
-                    style={{ background: accent }}
-                    aria-hidden
-                  />
+                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white/00 ring-black/5">
+                    <CategoryIcon category={cat as CategoryKey} color={accent} size={45} className="shrink-0" />
+                  </div>
+
                   <h2 className="text-base font-bold text-black categorias">{t}</h2>
                 </div>
                 <ChevronDown
-                  className={`h-5 w-5 text-gray-600 transition-transform duration-200 ${
-                    isOpen ? "rotate-180" : "rotate-0"
-                  }`}
+                  className={`h-5 w-5 text-gray-600 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"
+                    }`}
                   aria-hidden
                 />
               </button>
@@ -703,7 +843,7 @@ export default function DigitalMenu() {
                             />
                             <div className="flex items-center justify-between gap-4">
                               <div className="min-w-0">
-                                <div className="truncate text-lg font-bold categorias">
+                                <div className="truncate text-lg categorias">
                                   {dish.i18nNames?.[lang] ?? dish.name}
                                 </div>
                                 <div className="mt-1 text-sm text-gray-700">

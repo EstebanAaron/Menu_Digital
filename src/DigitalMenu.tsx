@@ -133,7 +133,7 @@ function TeideTinted({
   // tint/opacity quedan por compatibilidad, pero no se renderiza overlay si opacity <= 0
   tint = "#111827",
   opacity = 0.,
-  className = "absolute left-1/2 w-[100vw] max-w-[860px] h-40 sm:h-40 -top-0 sm:-top-5 z-[-1]",
+  className = "absolute left-1/2 w-[98vw] max-w-[860px] h-40 sm:h-40 -top-0 sm:-top-5 z-[-1]",
 }: {
   src?: string;
   tint?: string;

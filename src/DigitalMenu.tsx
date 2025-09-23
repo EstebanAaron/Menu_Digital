@@ -801,8 +801,43 @@ export default function DigitalMenu() {
           );
         })}
 
-        <footer className="mt-8 text-center text-xs text-gray-600">
-          © {new Date().getFullYear()} — Menú Sazón de mi Tierra.
+        <footer className="mt-8 text-center text-xs text-gray-600 flex flex-col items-center gap-2">
+          <div className="flex justify-center gap-4 mb-1">
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/_sazondemitierra_/?hl=es"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="inline-block hover:scale-110 transition"
+            >
+              <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
+                <rect width="20" height="20" x="2" y="2" rx="6" stroke="#E1306C" strokeWidth="2" fill="none"/>
+                <circle cx="12" cy="12" r="5" stroke="#E1306C" strokeWidth="2" fill="none"/>
+                <circle cx="17" cy="7" r="1.2" fill="#E1306C"/>
+              </svg>
+            </a>
+            {/* Google Reviews */}
+            <a
+              href="https://www.google.com/search?rlz=1C1UEAD_esES1165ES1165&uds=AOm0WdE2fekQnsyfYEw8JPYozOKzXE_DI4AHiyV3_85Iokg0xyxPlXh9OhClyEqQrpoorPvXLWiAZzwGybB3QU-UerVrSgb2XTsRSwVTjeD8QvfCFAhCgMxTsMz04uTOAf5lgxeCqrOsd00s9-eqNBnKz08jqlo-rg&q=Saz%C3%B3n%20De%20Mi%20Tierra%20Rese%C3%B1as&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-EzAU5VEI037mbYR_z3CD-mg5JQyrhbQG5gv5WrflcwE-xcOuBAmACfaeT7aWmhpezqfpGvHhDeQGYtIBUOpyYGzGCj4MKPO1NjV6Ocx9fJICeeWmWg%3D%3D&cs=1&hl=es&sa=X&ved=0CBEQ_4MLahcKEwjYlpDls--PAxUAAAAAHQAAAAAQDg&biw=1920&bih=953&dpr=1" // Pon aquí tu enlace directo a los comentarios de Google
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Google Reviews"
+              className="inline-block hover:scale-110 transition"
+            >
+              <svg width="26" height="26" viewBox="0 0 48 48">
+        <g>
+          <path fill="#4285F4" d="M43.6 20.5H42V20.4H24v7.2h11.2c-1.5 4-5.2 6.8-9.2 6.8-5.5 0-10-4.5-10-10s4.5-10 10-10c2.4 0 4.6.9 6.3 2.3l5.4-5.4C34.6 8.1 29.6 6 24 6 13.5 6 5 14.5 5 25s8.5 19 19 19c9.5 0 18-7.5 18-19 0-1.3-.1-2.7-.4-4z"/>
+          <path fill="#34A853" d="M6.3 14.7l5.9 4.3C14.1 16.1 18.7 13 24 13c2.4 0 4.6.9 6.3 2.3l5.4-5.4C34.6 8.1 29.6 6 24 6c-7.2 0-13.4 4-17 8.7z"/>
+          <path fill="#FBBC05" d="M24 44c5.3 0 10.3-1.8 14.1-4.9l-6.5-5.3c-2 1.4-4.5 2.2-7.6 2.2-4 0-7.7-2.7-9.2-6.7l-6.4 5c3.6 4.7 9.8 9.7 15.6 9.7z"/>
+          <path fill="#EA4335" d="M43.6 20.5H42V20.4H24v7.2h11.2c-.6 1.7-1.7 3.2-3.1 4.3l6.5 5.3c1.9-1.8 3.4-4.3 4-7.1.3-1.3.4-2.7.4-4 0-1.3-.1-2.7-.4-4z"/>
+        </g>
+      </svg>
+            </a>
+          </div>
+          <span>
+            © {new Date().getFullYear()} — Menú Sazón de mi Tierra.
+          </span>
         </footer>
       </div>
     </div>

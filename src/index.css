@@ -19,6 +19,7 @@ html, body, #root { height: 100%; }
   font-family: 'Rye', cursive;
   color: #fafafa;
   text-shadow: 1px 1px 12px rgba(0, 0, 0, 0.993);
+  padding-top: 12%;
 }
 .categorias {
   font-family: 'Rye', cursive;

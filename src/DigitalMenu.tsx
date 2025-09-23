@@ -184,7 +184,7 @@ function LogoWordmark({ lang }: { lang: Lang }) {
 
       {/* Guirnalda */}
       <svg
-        className="relative z-10 mt-2 h-7 sm:h-9 w-full text-white/0"
+        className="relative z-10 pt-2 h-7 sm:h-9 w-full text-white/0"
         viewBox="0 0 640 48"
         fill="none"
         role="img"
@@ -656,7 +656,7 @@ export default function DigitalMenu() {
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-8">
         {/* Header */}
-        <header className="mb-5 sm:mb-8">
+        <header className="pb-5 sm:pb-8">
           <LogoWordmark lang={lang} />
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:justify-end">
             <button
@@ -706,7 +706,7 @@ export default function DigitalMenu() {
             cat === "drinks-wine";
 
           return (
-            <section key={cat} className="mb-6" ref={(el) => (sectionRefs.current[cat] = el)}>
+            <section key={cat} className="pb-6" ref={(el) => (sectionRefs.current[cat] = el)}>
               <button
                 onClick={() => toggleCategory(cat)}
                 aria-expanded={isOpen}
@@ -804,7 +804,7 @@ export default function DigitalMenu() {
         })}
 
         <footer className=" text-center text-xs text-gray-600 flex flex-col items-center gap-2">
-          <div className="flex justify-center gap-4 mb-1">
+          <div className="flex justify-center gap-4 pb-1">
             {/* Instagram */}
             <a
               href="https://www.instagram.com/_sazondemitierra_/?hl=es"

@@ -17,7 +17,6 @@ html, body, #root { height: 100%; }
 
 .Titulo {
   font-family: 'Rye', cursive;
-  margin-top: 2.7rem;
   color: #fafafa;
   text-shadow: 1px 1px 12px rgba(0, 0, 0, 0.993);
 }

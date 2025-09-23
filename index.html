@@ -7,11 +7,17 @@
   </head>
   <body class="bg-hero">
     <script>
+      let vhTimeout;
       function setVh() {
         document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
       }
+      function debounceSetVh() {
+        clearTimeout(vhTimeout);
+        vhTimeout = setTimeout(setVh, 50);
+      }
       setVh();
-      window.addEventListener('resize', setVh);
+      window.addEventListener('resize', debounceSetVh);
+      window.addEventListener('scroll', debounceSetVh);
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

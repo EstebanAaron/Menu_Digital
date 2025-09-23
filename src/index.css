@@ -13,7 +13,7 @@ h1{
 }
 
 
-html, body, #root { height: 100%; }
+
 
 .Titulo {
   font-family: 'Rye', cursive;
@@ -33,7 +33,7 @@ html, body, #root { height: 100%; }
   z-index: -10;
   pointer-events: none;
   overflow: hidden;
-
+  background: #0b1220; /* color de seguridad por si tarda 1 frame */
 }
 
 /* Centrado absoluto del media */
@@ -61,3 +61,24 @@ html, body, #root { height: 100%; }
     height: 110svh;
   }
 }
+
+/* Fondo fijo + overscan (10%) para que nunca asome blanco en móvil */
+html, body { background: #0b1220; } /* color de seguridad */
+body::before {
+  content: "";
+  position: fixed;
+  z-index: 0;           /* detrás del contenido, pero visible */
+  inset: -10vh -10vw;   /* overscan para cubrir cambios del viewport */
+  background: url("img/11.jpg") center / cover no-repeat;
+  pointer-events: none;
+}
+@media (orientation: landscape) {
+  body::before {
+    background-image: url("img/horizontal.jpg"); /* o .png si es tu caso */
+  }
+}
+/* En navegadores modernos usamos viewport estable */
+@supports (height: 100svh) {
+  body::before { inset: -10svh -10svw; }
+}
+

@@ -602,8 +602,8 @@ export default function DigitalMenu() {
   return (
     <div className="relative min-h-screen overflow-x-hidden">
       {/* ===== Fondo global: horizontal en escritorio/landscape, vertical por defecto ===== */}
-      <div aria-hidden className="bg-fixed-overscan">
-        <picture className="bg-fixed-overscan__media">
+      <div aria-hidden className="">
+        <picture className="">
           <source srcSet="img/horizontal.png" media="(orientation: landscape)" />
           <img
             src="img/11.png"

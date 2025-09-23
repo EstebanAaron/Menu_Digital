@@ -196,13 +196,13 @@ function LogoWordmark({ lang }: { lang: Lang }) {
           strokeWidth="4"
           strokeLinecap="round"
         />
-        {[40,80,120,160,200,240,280,320,360,400,440,480,520,560].map((x,i)=>(
+        {[40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560].map((x, i) => (
           <g key={x}>
-            <ellipse cx={x} cy={i%2===0?18:34} rx="7" ry="3.2"
-              transform={`rotate(${i%2===0?-18:18}, ${x}, ${i%2===0?18:34})`}
+            <ellipse cx={x} cy={i % 2 === 0 ? 18 : 34} rx="7" ry="3.2"
+              transform={`rotate(${i % 2 === 0 ? -18 : 18}, ${x}, ${i % 2 === 0 ? 18 : 34})`}
               fill="currentColor" />
-            <ellipse cx={x+10} cy={i%2===0?34:18} rx="7" ry="3.2"
-              transform={`rotate(${i%2===0?18:-18}, ${x+10}, ${i%2===0?34:18})`}
+            <ellipse cx={x + 10} cy={i % 2 === 0 ? 34 : 18} rx="7" ry="3.2"
+              transform={`rotate(${i % 2 === 0 ? 18 : -18}, ${x + 10}, ${i % 2 === 0 ? 34 : 18})`}
               fill="currentColor" />
           </g>
         ))}
@@ -417,9 +417,8 @@ function DishCard({
           )}
 
           <ChevronDown
-            className={`h-5 w-5 transition-transform duration-200 ${
-              isOpen ? "rotate-180" : "rotate-0"
-            }`}
+            className={`h-5 w-5 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"
+              }`}
             aria-hidden
           />
         </div>
@@ -603,15 +602,22 @@ export default function DigitalMenu() {
   return (
     <div className="relative min-h-screen overflow-x-hidden">
       {/* ===== Fondo global: horizontal en escritorio/landscape, vertical por defecto ===== */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
-        <picture>
-          <source srcSet="img/horizontal.png" media="(min-aspect-ratio: 4/3)" />
+      <div aria-hidden className="fixed inset-0 -z-10">
+        <picture className="block h-full w-full">
           <source srcSet="img/horizontal.png" media="(orientation: landscape)" />
           <img
             src="img/11.png"
             alt=""
             className="absolute inset-0 h-full w-full object-cover"
-            loading="lazy"
+            // claves para que NO “respire” al hacer scroll en móvil:
+            loading="eager"
+            decoding="sync"
+            fetchPriority="high"
+            style={{
+              // corrige parpadeos en iOS/Android al recomponer
+              transform: "translateZ(0)",
+              backfaceVisibility: "hidden",
+            }}
           />
         </picture>
         <div className="absolute inset-0 bg-white/14" />
@@ -716,9 +722,8 @@ export default function DigitalMenu() {
                   <h2 className="text-base font-bold text-black categorias">{t}</h2>
                 </div>
                 <ChevronDown
-                  className={`h-5 w-5 text-gray-600 transition-transform duration-200 ${
-                    isOpen ? "rotate-180" : "rotate-0"
-                  }`}
+                  className={`h-5 w-5 text-gray-600 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"
+                    }`}
                   aria-hidden
                 />
               </button>
@@ -809,9 +814,9 @@ export default function DigitalMenu() {
               className="inline-block hover:scale-110 transition"
             >
               <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
-                <rect width="20" height="20" x="2" y="2" rx="6" stroke="#E1306C" strokeWidth="2" fill="none"/>
-                <circle cx="12" cy="12" r="5" stroke="#E1306C" strokeWidth="2" fill="none"/>
-                <circle cx="17" cy="7" r="1.2" fill="#E1306C"/>
+                <rect width="20" height="20" x="2" y="2" rx="6" stroke="#E1306C" strokeWidth="2" fill="none" />
+                <circle cx="12" cy="12" r="5" stroke="#E1306C" strokeWidth="2" fill="none" />
+                <circle cx="17" cy="7" r="1.2" fill="#E1306C" />
               </svg>
             </a>
             {/* Google Reviews */}
@@ -823,13 +828,13 @@ export default function DigitalMenu() {
               className="inline-block hover:scale-110 transition"
             >
               <svg width="26" height="26" viewBox="0 0 48 48">
-        <g>
-          <path fill="#4285F4" d="M43.6 20.5H42V20.4H24v7.2h11.2c-1.5 4-5.2 6.8-9.2 6.8-5.5 0-10-4.5-10-10s4.5-10 10-10c2.4 0 4.6.9 6.3 2.3l5.4-5.4C34.6 8.1 29.6 6 24 6 13.5 6 5 14.5 5 25s8.5 19 19 19c9.5 0 18-7.5 18-19 0-1.3-.1-2.7-.4-4z"/>
-          <path fill="#34A853" d="M6.3 14.7l5.9 4.3C14.1 16.1 18.7 13 24 13c2.4 0 4.6.9 6.3 2.3l5.4-5.4C34.6 8.1 29.6 6 24 6c-7.2 0-13.4 4-17 8.7z"/>
-          <path fill="#FBBC05" d="M24 44c5.3 0 10.3-1.8 14.1-4.9l-6.5-5.3c-2 1.4-4.5 2.2-7.6 2.2-4 0-7.7-2.7-9.2-6.7l-6.4 5c3.6 4.7 9.8 9.7 15.6 9.7z"/>
-          <path fill="#EA4335" d="M43.6 20.5H42V20.4H24v7.2h11.2c-.6 1.7-1.7 3.2-3.1 4.3l6.5 5.3c1.9-1.8 3.4-4.3 4-7.1.3-1.3.4-2.7.4-4 0-1.3-.1-2.7-.4-4z"/>
-        </g>
-      </svg>
+                <g>
+                  <path fill="#4285F4" d="M43.6 20.5H42V20.4H24v7.2h11.2c-1.5 4-5.2 6.8-9.2 6.8-5.5 0-10-4.5-10-10s4.5-10 10-10c2.4 0 4.6.9 6.3 2.3l5.4-5.4C34.6 8.1 29.6 6 24 6 13.5 6 5 14.5 5 25s8.5 19 19 19c9.5 0 18-7.5 18-19 0-1.3-.1-2.7-.4-4z" />
+                  <path fill="#34A853" d="M6.3 14.7l5.9 4.3C14.1 16.1 18.7 13 24 13c2.4 0 4.6.9 6.3 2.3l5.4-5.4C34.6 8.1 29.6 6 24 6c-7.2 0-13.4 4-17 8.7z" />
+                  <path fill="#FBBC05" d="M24 44c5.3 0 10.3-1.8 14.1-4.9l-6.5-5.3c-2 1.4-4.5 2.2-7.6 2.2-4 0-7.7-2.7-9.2-6.7l-6.4 5c3.6 4.7 9.8 9.7 15.6 9.7z" />
+                  <path fill="#EA4335" d="M43.6 20.5H42V20.4H24v7.2h11.2c-.6 1.7-1.7 3.2-3.1 4.3l6.5 5.3c1.9-1.8 3.4-4.3 4-7.1.3-1.3.4-2.7.4-4 0-1.3-.1-2.7-.4-4z" />
+                </g>
+              </svg>
             </a>
           </div>
           <span>

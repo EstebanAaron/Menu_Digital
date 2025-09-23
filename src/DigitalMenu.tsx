@@ -803,7 +803,7 @@ export default function DigitalMenu() {
           );
         })}
 
-        <footer className="mt-8 text-center text-xs text-gray-600 flex flex-col items-center gap-2">
+        <footer className=" text-center text-xs text-gray-600 flex flex-col items-center gap-2">
           <div className="flex justify-center gap-4 mb-1">
             {/* Instagram */}
             <a

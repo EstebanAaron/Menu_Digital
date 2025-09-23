@@ -12,7 +12,9 @@
       }
       setVh();
       window.addEventListener('resize', setVh);
-      window.addEventListener('scroll', setVh); // <-- Añade esto
+      window.addEventListener('scroll', setVh);
+      window.addEventListener('focusin', setVh);
+      window.addEventListener('focusout', setVh);
     </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

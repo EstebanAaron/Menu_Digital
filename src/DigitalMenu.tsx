@@ -602,26 +602,20 @@ export default function DigitalMenu() {
   return (
     <div className="relative min-h-screen overflow-x-hidden">
       {/* ===== Fondo global: horizontal en escritorio/landscape, vertical por defecto ===== */}
-      <div aria-hidden className="fixed inset-0 -z-10">
-        <picture className="block h-full w-full">
+      <div aria-hidden className="bg-fixed-overscan">
+        <picture className="bg-fixed-overscan__media">
           <source srcSet="img/horizontal.png" media="(orientation: landscape)" />
           <img
             src="img/11.png"
             alt=""
-            className="absolute inset-0 h-full w-full object-cover"
-            // claves para que NO “respire” al hacer scroll en móvil:
+            className="bg-fixed-overscan__img"
             loading="eager"
             decoding="sync"
             fetchPriority="high"
-            style={{
-              // corrige parpadeos en iOS/Android al recomponer
-              transform: "translateZ(0)",
-              backfaceVisibility: "hidden",
-            }}
           />
         </picture>
-        <div className="absolute inset-0 bg-white/14" />
       </div>
+
 
       {/* Barra fija "sticky" */}
       {stickyCat && (

@@ -26,3 +26,38 @@ html, body, #root { height: 100%; }
   color: #000000;
   text-shadow: 1px 1px 12px rgba(255, 255, 255, 0.993);
 }
+/* Contenedor fijo que no “respira” */
+.bg-fixed-overscan {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  overflow: hidden;
+  background: #0b1220; /* color de seguridad por si tarda 1 frame */
+}
+
+/* Centrado absoluto del media */
+.bg-fixed-overscan__media,
+.bg-fixed-overscan__img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* La imagen siempre es >100% del viewport (overscan) */
+.bg-fixed-overscan__img {
+  object-fit: cover;
+  width: 110vw;   /* fallback */
+  height: 110vh;  /* fallback */
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* En navegadores modernos usamos el viewport estable (small viewport) */
+@supports (width: 100svw) {
+  .bg-fixed-overscan__img {
+    width: 110svw;
+    height: 110svh;
+  }
+}

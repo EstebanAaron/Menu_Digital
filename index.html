@@ -8,5 +8,12 @@
   <body class="bg-hero">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      function setVh() {
+        document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+      }
+      setVh();
+      window.addEventListener('resize', setVh);
+    </script>
   </body>
 </html>

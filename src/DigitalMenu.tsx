@@ -605,10 +605,8 @@ export default function DigitalMenu() {
       {/* ===== Fondo global: horizontal en escritorio/landscape, vertical por defecto ===== */}
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 bg-hero">
         <picture>
-          {/* escritorio o landscape */}
           <source srcSet="img/horizontal.png" media="(min-aspect-ratio: 4/3)" />
           <source srcSet="img/horizontal.png" media="(orientation: landscape)" />
-          {/* móvil / vertical */}
           <img
             src="img/11.png"
             alt=""
@@ -616,7 +614,6 @@ export default function DigitalMenu() {
             loading="lazy"
           />
         </picture>
-        {/* overlay para legibilidad */}
         <div className="absolute inset-0 bg-white/14" />
       </div>
 

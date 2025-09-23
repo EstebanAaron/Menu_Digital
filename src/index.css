@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 .bg-hero {
-  
+  height: calc(var(--vh, 1vh) * 100);
   background-size: cover;
   background-position: center;
   background-attachment: fixed; 

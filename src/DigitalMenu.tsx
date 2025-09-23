@@ -132,8 +132,8 @@ function TeideTinted({
   src = "img/teide.png",
   // tint/opacity quedan por compatibilidad, pero no se renderiza overlay si opacity <= 0
   tint = "#111827",
-  opacity = 0, 
-  className = "absolute left-1/2 w-[92vw] max-w-[860px] h-28 sm:h-40 -top-0 sm:-top-5",
+  opacity = 0.,
+  className = "absolute left-1/2 w-[92vw] max-w-[860px] h-40 sm:h-40 -top-0 sm:-top-5 z-[-1]",
 }: {
   src?: string;
   tint?: string;
@@ -166,7 +166,7 @@ function TeideTinted({
 function LogoWordmark({ lang }: { lang: Lang }) {
   const title = "SAZÓN DE MI TIERRA";
   return (
-    <div className="relative select-none w-full max-w-[680px] mx-auto">
+    <div className="relative select-none w-full max-w-[680px] mx-auto  ">
       {/* Teide detrás del texto */}
       <TeideTinted
         // si quieres moverlo un poco hacia abajo usa, por ejemplo: className="absolute left-1/2 w-[92vw] max-w-[860px] h-28 sm:h-40 top-2 sm:-top-6"
@@ -174,8 +174,8 @@ function LogoWordmark({ lang }: { lang: Lang }) {
       />
 
       {/* Texto delante */}
-      <div className="relative z-10 uppercase font-extrabold tracking-wide text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.28)] leading-none text-center">
-        <span className="inline-block -skew-y-1 text-3xl sm:text-5xl Titulo">
+      <div className="relative z-10 uppercase font-extrabold tracking-wide text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.28)] leading-none text-center ">
+        <span className="inline-block -skew-y-1 text-4xl sm:text-5xl Titulo ">
           {title}
         </span>
       </div>
@@ -184,7 +184,7 @@ function LogoWordmark({ lang }: { lang: Lang }) {
 
       {/* Guirnalda */}
       <svg
-        className="relative z-10 mt-2 h-7 sm:h-9 w-full text-white"
+        className="relative z-10 mt-2 h-7 sm:h-9 w-full text-white/0"
         viewBox="0 0 640 48"
         fill="none"
         role="img"

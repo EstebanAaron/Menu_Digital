@@ -33,7 +33,7 @@ html, body, #root { height: 100%; }
   z-index: -10;
   pointer-events: none;
   overflow: hidden;
-  background: #0b1220; /* color de seguridad por si tarda 1 frame */
+
 }
 
 /* Centrado absoluto del media */

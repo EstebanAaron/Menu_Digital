@@ -832,9 +832,9 @@ export default function DigitalMenu() {
       </svg>
             </a>
           </div>
-          <span>
+          {/* <span>
             © {new Date().getFullYear()} — Menú Sazón de mi Tierra.
-          </span>
+          </span> */}
         </footer>
       </div>
     </div>

@@ -807,7 +807,7 @@ export const DISHES: Dish[] = [
       de: "Verschiedene Desserts",
       fr: "Desserts variés",
     },
-    price: ,
+    price: 0,
     descriptions: {
       es: "Pregunta por el postre de hoy.",
       en: "Ask for today's dessert.",

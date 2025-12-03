@@ -270,7 +270,7 @@ export const DISHES: Dish[] = [
       de: "Runzelkartoffeln mit Mojo",
       fr: "Pommes de terre « arrugadas » au mojo",
     },
-    price: 3.50,
+    price: 4.50,
     descriptions: {
       es: "papas canarias con mojo rojo o verde. Ingredientes:Papa arrugada en agua,sal limon. Mojo rojo: pimiento,comino,pimenton sal aceite vinagre.Mojo verde: cilantro,perejil,ajo,comino,sal aceite, vinagre.",
       en: "Canarian potatoes with red or green mojo. Ingredients: wrinkled potato in water, salt, lemon. Red mojo: pepper, cumin, paprika, salt, oil, vinegar. Green mojo: coriander, parsley, garlic, cumin, salt, oil, vinegar.",
@@ -308,7 +308,7 @@ export const DISHES: Dish[] = [
       de: "Salat « Sazón de mi Tierra »",
       fr: "Salade « Sazón de mi Tierra »",
     },
-    price: 9.0,
+    price: 9.50,
     descriptions: {
       es: "Ensalada de la casa. Ingredientes:Col blanca, tomate,zanahoria rallada, huevo duro,aguacate, maiz,Aderezo:cebolla blanca, pimiento  mahonesa.Chicharron:sal, limón.",
       en: "House salad. Ingredients: white cabbage, tomato, grated carrot, hard-boiled egg, avocado, corn, Dressing: white onion, pepper, mayonnaise. Chicharrón: salt, lemon.",
@@ -443,7 +443,7 @@ export const DISHES: Dish[] = [
       de: "Rippen mit Kartoffeln & Mais",
       fr: "Côtes avec pommes de terre & maïs",
     },
-    price: 9.5,
+    price: 10.5,
     descriptions: {
       es: "Guarnición campesina. Ingredientes: Tiras de costillas de cerdo saladas, papa, mazorca.Mojo verde: ajo,comino,sal,aceite,vinagre.",
       en: "Rustic garnish. Ingredients: salted pork rib strips, potato, corn. Green mojo: garlic, cumin, salt, oil, vinegar.",
@@ -462,7 +462,7 @@ export const DISHES: Dish[] = [
       de: "Ziegeneintopf",
       fr: "Ragoût de chèvre",
     },
-    price: 9.5,
+    price: 11.5,
     descriptions: {
       es: "Guiso tradicional. Ingredientes:Tacos de cabra, tomate, cebolla, pimiento,ajo, vino, laurel,tomillo,oregano,colorante alimentario.",
       en: "Traditional stew. Ingredients: goat meat chunks, tomato, onion, pepper, garlic, wine, bay leaf, thyme, oregano, food coloring.",
@@ -500,7 +500,7 @@ export const DISHES: Dish[] = [
       de: "Linseneintopf",
       fr: "Ragoût de lentilles",
     },
-    price: 6.0,
+    price: 6.50,
     descriptions: {
       es: "Clásico y nutritivo. Ingredientes: Lenteja, zanahoria, papa,calabaza,calabacin,cebolla,pimiento,ajo, laurel, comino,pimienta  negra,colorante alimentario,sal,costillade cerdo,panceta,chorizo  sarta.",
       en: "Classic & hearty. Ingredients: lentils, carrot, potato, pumpkin, zucchini, onion, pepper, garlic, bay leaf, cumin, black pepper, food coloring, salt, pork ribs, pork belly, chorizo sausage.",
@@ -519,7 +519,7 @@ export const DISHES: Dish[] = [
       de: "Brunnenkresse-Eintopf",
       fr: "Ragoût de cresson",
     },
-    price: 6.0,
+    price: 6.50,
     descriptions: {
       es: "Vegetal y aromático. Ingredientes:Berros, papa, batata,calabaza, cebolla,tomate ajo,costilla de cerdo,panceta, chorizo ,sarta,comino,oregano,laurel,tomillo,aceite,judias,pimienta negra.",
       en: "Vegetable & aromatic. Ingredients: watercress, potato, sweet potato, pumpkin, onion, tomato, garlic, pork ribs, pork belly, chorizo sausage, cumin, oregano, bay leaf, thyme, oil, beans, black pepper.",
@@ -558,7 +558,7 @@ export const DISHES: Dish[] = [
       de: "Dreifacher Sancocho (samstags)",
       fr: "Sancocho « trifásico » (samedis)",
     },
-    price: 18.0,
+    price: 19.90,
     descriptions: {
       es: "Plato tipico compuesto de un primer plato de caldo y un segundo con costilla de res,costilla de cerdo,gallina ,las tres carnes  en salsa y  guarnición. Ingredientes: Sancocho:platano,yuca,papa,ajo,comino,sal,cilantro,costilla de res,costilla de cerdo,gallina.Punta de ensalada:lechuga,cebolla blanca,maiz,tomate y limón. Arroz:arroz blanco,sal,aceite.Salsa o guiso:cebolla blanca,tomate,ajo,comino,colorante alimentario.",
       en: "Typical dish consisting of a first course of broth and a second with beef ribs, pork ribs, hen, the three meats in sauce and garnish. Ingredients: Sancocho: plantain, cassava, potato, garlic, cumin, salt, coriander, beef ribs, pork ribs, hen. Salad garnish: lettuce, white onion, corn, tomato & lemon. Rice: white rice, salt, oil. Sauce or stew: white onion, tomato, garlic, cumin, food coloring.",
@@ -577,7 +577,7 @@ export const DISHES: Dish[] = [
       de: "Sancocho mit Rippchen",
       fr: "Sancocho de côtes",
     },
-    price: 15.5,
+    price: 17.00,
     descriptions: {
       es: "Plato tipico compuesto de un primer plato de caldo y un segundo con costilla de res en salsa y guarnición. Ingredientes:Sancocho:platano,yuca,papa,ajo,comino,sal,cilantro,costilla de res.Punta de ensalada:lechuga,cebolla blanca,maiz,tomate y limón. Arroz:arroz blanco,sal,aceite.Salsa o guiso:cebolla blanca,tomate,ajo,comino,colorante alimentario.",
       en: "Typical dish consisting of a first course of broth and a second with beef ribs in sauce and garnish. Ingredients: Sancocho: plantain, cassava, potato, garlic, cumin, salt, coriander, beef ribs. Salad garnish: lettuce, white onion, corn, tomato & lemon. Rice: white rice, salt, oil. Sauce or stew: white onion, tomato, garlic, cumin, food coloring.",
@@ -616,7 +616,7 @@ export const DISHES: Dish[] = [
       de: "Frittierter Fisch",
       fr: "Poisson frit",
     },
-    price: 19.0,
+    price: 19.50,
     descriptions: {
       es: "Pieza de pescado dorada y crujiente. Ingredientes:Pescado blanco (Dorada):sal,limón,comino. Ajo,aceite oliva,vinagre.Punta de ensalada:lechuga,cebolla blanca,maiz,zanahoria rallada, tomate y lim.Patacon.",
       en: "Golden, crispy fish piece. Ingredients: White fish (Dorada): salt, lemon, cumin. Garlic, olive oil, vinegar. Salad garnish: lettuce, white onion, corn, grated carrot, tomato & lemon. Patacón.",
@@ -637,12 +637,12 @@ export const DISHES: Dish[] = [
       de: "Gemischter Grillteller",
       fr: "Grillade mixte",
     },
-    price: 30.0,
+    price: 33.0,
     descriptions: {
-      es: "Surtido de carnes a la brasa. Ingredientes:Bistec de ternera, bistec de cerdo, chorizo parrillero,pollo .",
-      en: "Assorted grilled meats. Ingredients: beef steak, pork steak, chorizo, chicken.",
-      de: "Gemischte Grillfleischplatte. Zutaten: Rindersteak, Schweinesteak, Chorizo, Hähnchen.",
-      fr: "Assortiment de viandes grillées. Ingrédients : steak de bœuf, steak de porc, chorizo, poulet.",
+      es: "Surtido de carnes a la brasa. Ingredientes:Entrecot de ternera, bistec de cerdo, chorizo parrillero,pollo .",
+      en: "Assorted grilled meats. Ingredients: ribeye steak, pork steak, chorizo, chicken.",
+      de: "Gemischte Grillfleischplatte. Zutaten: Rinderentrecôte, Schweinesteak, Chorizo, Hähnchen.",
+      fr: "Assortiment de viandes grillées. Ingrédients : Entrecôte de veau, steak de porc, chorizo, poulet.",
     },
     image: "img/platos/parrillada.jpg",
   },
@@ -656,7 +656,7 @@ export const DISHES: Dish[] = [
       de: "Schweinefilet",
       fr: "Filet de porc",
     },
-    price: 11.0,
+    price: 15.90,
     descriptions: {
       es: "A la plancha, jugoso. Ingredientes: solomillo de cerdo. Punta de ensalada: lechuga, cebolla blanca, maíz, zanahoria rallada, tomate, limón. Papas fritas.",
       en: "Griddled, juicy. Ingredients: pork tenderloin. Salad garnish: lettuce, white onion, corn, grated carrot, tomato, lemon. French fries.",
@@ -675,7 +675,7 @@ export const DISHES: Dish[] = [
       de: "Entrecôte (Rind/Veal)",
       fr: "Entrecôte (veau/boeuf)",
     },
-    price: 15.0,
+    price: 18.0,
     descriptions: {
       es: "Al punto. Ingredientes: entrecot, sal, pimienta, aceite.",
       en: "To your liking. Ingredients: entrecôte, salt, pepper, oil.",
@@ -713,7 +713,7 @@ export const DISHES: Dish[] = [
       de: "Schweinekotelett",
       fr: "Côte de porc",
     },
-    price: 10.0,
+    price: 17.90,
     descriptions: {
       es: "A la brasa con punta de ensalada y papas fritas naturales. Ingredientes: chuleta, sal, pimienta, aceite, ensalada , papas fritas.",
       en: "Grilled with a side salad and fries. Ingredients: chop, salt, pepper, oil, salad, fries.",
@@ -732,8 +732,8 @@ export const DISHES: Dish[] = [
       de: "Halbes / ganzes Hähnchen",
       fr: "Demi-poulet / poulet entier",
     },
-    priceHalf: 7.0,
-    priceWhole: 9.0,
+    priceHalf: 9.50,
+    priceWhole: 14.80,
     descriptions: {
       es: "Medio pollo a la brasa con ensalada y papas fritas naturales. Pollo entero solo pollo. Ingredientes: pollo, sal, pimienta, ajo, aceite, ensalada, papas fritas.",
       en: "Half chicken from the grill with salad and fries. Whole chicken is served without garnish. Ingredients: chicken, salt, pepper, garlic, oil, salad, fries.",
@@ -748,12 +748,12 @@ export const DISHES: Dish[] = [
     category: "grill",
     name: "Picada a la brasa Sazón de mi Tierra",
     i18nNames: {
-      es: "Picada a la brasa Sazón de mi Tierra",
+      es: "Parrillada-picada Sazón de mi Tierra",
       en: "Grilled Picada Sazón from my Land",
       de: "Gegrillte Picada „Sazón de mi Tierra“",
       fr: "Picada grillée « Sazón de mi Tierra »",
     },
-    price: 35.0,
+    price: 42.90,
     descriptions: {
       es: "Surtido a la brasa para compartir. Ingredientes: Bistec de ternera, bistec de cerdo, pollo, chorizo antioqueño, chicharrones, chorizo parrilero, chuleta, arepa, patacones y pimientos.",
       en: "Grilled assortment to share. Ingredients: beef steak, pork steak, chicken, chorizo, pork rind, arepa, fried plantain & peppers.",
@@ -774,7 +774,7 @@ export const DISHES: Dish[] = [
       de: "Omas Kuchen",
       fr: "Gâteau de grand-mère",
     },
-    price: 4.5,
+    price: 5.00,
     descriptions: {
       es: "Casera con crema y galleta. Ingredientes: galleta, crema pastelera, cacao.",
       en: "Homemade with cream & biscuit. Ingredients: biscuit, custard, cocoa.",
@@ -788,7 +788,7 @@ export const DISHES: Dish[] = [
     category: "dessert",
     name: "Quesillo",
     i18nNames: { es: "Quesillo", en: "Quesillo", de: "Quesillo", fr: "Quesillo" },
-    price: 3.5,
+    price: 5.00,
     descriptions: {
       es: "Flan de huevo suave. Ingredientes: leche,leche condensada,huevos,vainilla,caramelo y limón.",
       en: "Silky egg flan. Ingredients: milk, condensed milk, eggs, vanilla, caramel, and lemon.",
@@ -807,7 +807,7 @@ export const DISHES: Dish[] = [
       de: "Verschiedene Desserts",
       fr: "Desserts variés",
     },
-    price: 4.5,
+    price: ,
     descriptions: {
       es: "Pregunta por el postre de hoy.",
       en: "Ask for today's dessert.",
@@ -885,7 +885,7 @@ export const DISHES: Dish[] = [
       de: "Coca-Cola (normal/light)",
       fr: "Coca-Cola (classique/light)",
     },
-    price: 2.3, // actualizado
+    price: 2.50, // actualizado
     descriptions: {
       es: "Refresco carbonatado. Ingredientes: agua, azúcar/edulcorante, CO₂, aromas.",
       en: "Carbonated soft drink. Ingredients: water, sugar/sweetener, CO₂, flavorings.",
@@ -904,7 +904,7 @@ export const DISHES: Dish[] = [
       de: "Fanta (Orange/Zitrone)",
       fr: "Fanta (orange/citron)",
     },
-    price: 2.3, // actualizado
+    price: 2.50, // actualizado
     descriptions: {
       es: "Refresco de sabor. Ingredientes: agua, azúcar, CO₂, aromas cítricos.",
       en: "Flavoured soda. Ingredients: water, sugar, CO₂, citrus flavorings.",
@@ -918,7 +918,7 @@ export const DISHES: Dish[] = [
     category: "drinks-soft",
     name: "Sprite",
     i18nNames: { es: "Sprite", en: "Sprite", de: "Sprite", fr: "Sprite" },
-    price: 2.3, // actualizado
+    price: 2.5, // actualizado
     descriptions: {
       es: "Refresco lima-limón. Ingredientes: agua, azúcar, CO₂, aromas.",
       en: "Lemon-lime soda. Ingredients: water, sugar, CO₂, flavorings.",
@@ -937,7 +937,7 @@ export const DISHES: Dish[] = [
       de: "Fuze Tea (Mango-Ananas)",
       fr: "Fuze Tea (mangue-ananas)",
     },
-    price: 2.3, // actualizado
+    price: 2.5, // actualizado
     descriptions: {
       es: "Té frío saborizado. Ingredientes: agua, extracto de té, azúcar, aromas.",
       en: "Flavoured iced tea. Ingredients: water, tea extract, sugar, flavorings.",
@@ -956,7 +956,7 @@ export const DISHES: Dish[] = [
       de: "Royal Bliss (Classic/Berry)",
       fr: "Royal Bliss (Classic/Berry)",
     },
-    price: 2.3, // actualizado
+    price: 2.5, // actualizado
     descriptions: {
       es: "Mixer refrescante. Ingredientes: agua carbonatada, azúcar, aromas.",
       en: "Refreshing mixer. Ingredients: carbonated water, sugar, flavorings.",
@@ -1448,7 +1448,7 @@ export const DISHES: Dish[] = [
       de: "Johnnie Walker Red Label",
       fr: "Johnnie Walker Black Label",
     },
-    priceShot: 2.0, priceGlass: 3.0, // deja vacío si aún no tienes precios
+    priceShot: 2.0, priceGlass: 4.0, // deja vacío si aún no tienes precios
     descriptions: {
       es: "Blended Scotch. Ingredientes: whisky de malta y grano.",
       en: "Blended Scotch. Ingredients: malt & grain whiskies.",
@@ -1514,7 +1514,7 @@ export const DISHES: Dish[] = [
     category: "drinks-liquor",
     name: "Gordon’s",
     i18nNames: { es: "Gordon’s", en: "Gordon’s", de: "Gordon’s", fr: "Gordon’s" },
-    priceGlass: 3.0,
+    priceGlass: 4.0,
     descriptions: {
       es: "Ginebra clásica. Ingredientes: destilado de grano, enebro, botánicos.",
       en: "Classic gin. Ingredients: grain spirit, juniper, botanicals.",
@@ -1542,7 +1542,7 @@ export const DISHES: Dish[] = [
     category: "drinks-liquor",
     name: "Arehucas",
     i18nNames: { es: "Arehucas", en: "Arehucas", de: "Arehucas", fr: "Arehucas" },
-    priceGlass: 3.0,
+    priceGlass: 4.0,
     descriptions: {
       es: "Ron canario. Ingredientes: melaza de caña, envejecimiento.",
       en: "Canarian rum. Ingredients: cane molasses, aging.",
@@ -1689,7 +1689,7 @@ export const DISHES: Dish[] = [
     category: "drinks-liquor",
     name: "Jägermeister",
     i18nNames: { es: "Jägermeister", en: "Jägermeister", de: "Jägermeister", fr: "Jägermeister" },
-    priceShot: 2.0, priceGlass: 3.5,
+    priceShot: 2.0, priceGlass: 4.0,
     descriptions: {
       es: "Licor de hierbas. Ingredientes: macerado de hierbas, especias.",
       en: "Herbal liqueur. Ingredients: herbs & spices maceration.",
@@ -1724,7 +1724,7 @@ export const DISHES: Dish[] = [
       de: "Rotwein (1/4)",
       fr: "Vin rouge (1/4)",
     },
-    price: 3.0,
+    price: 3.50,
     descriptions: {
       es: "Vino de la casa. Ingredientes: uva tinta.",
       en: "House red. Ingredients: red grapes.",
@@ -1762,7 +1762,7 @@ export const DISHES: Dish[] = [
       de: "Weißwein (1/4)",
       fr: "Vin blanc (1/4)",
     },
-    price: 3.0,
+    price: 3.50,
     descriptions: {
       es: "Vino de la casa. Ingredientes: uva blanca.",
       en: "House white. Ingredients: white grapes.",
@@ -1800,7 +1800,7 @@ export const DISHES: Dish[] = [
       de: "Süßwein (1/4)",
       fr: "Vin doux (1/4)",
     },
-    price: 3.0,
+    price: 3.50,
     descriptions: {
       es: "Dulce de la casa. Ingredientes: uva, azúcar residual.",
       en: "House sweet. Ingredients: grapes, residual sugar.",

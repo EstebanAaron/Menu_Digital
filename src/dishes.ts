@@ -194,7 +194,7 @@ export const DISHES: Dish[] = [
       de: "Gegrillter Käse",
       fr: "Fromage grillé",
     },
-    price: 9.0,
+    price: 9.50,
     descriptions: {
       es: "Queso dorado a la plancha. Ingredientes:Queso ahumado, Mojo rojo: pimiento,comino,pimenton sal aceite vinagre.Mojo verde: cilantro,perejil,ajo,comino,sal aceite, vinagre.Mermelada de arandanos.",
       en: "Seared cheese, golden and melty. Ingredients: smoked cheese, Red mojo: pepper, cumin, paprika, salt, oil, vinegar. Green mojo: coriander, parsley, garlic, cumin, salt, oil, vinegar. Cranberry jam.",

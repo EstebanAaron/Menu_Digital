@@ -1289,6 +1289,43 @@ export const DISHES: Dish[] = [
     },
     image: IMG["drinks-coffee"],
   },
+   {
+    id: slug("Americano"),
+    category: "drinks-coffee",
+    name: "Americano",
+    i18nNames: {
+      es: "Americano",
+      en: "Americano",
+      de: "Americano",
+      fr: "Americano",
+    },
+    price: 1.50,
+    descriptions: {
+      es: "Corto y aromático. Ingredientes: café arábica, agua.",
+      en: "Short & aromatic. Ingredients: arabica coffee, water.",
+      de: "Kurz & aromatisch. Zutaten: Arabica-Kaffee, Wasser.",
+      fr: "Court & aromatique. Ingrédients : café arabica, eau.",
+    },
+    image: IMG["drinks-coffee"],
+  }, {
+    id: slug("Capuchino"),
+    category: "drinks-coffee",
+    name: "Capuchino",
+    i18nNames: {
+      es: "Capuchino",
+      en: "Capuchino",
+      de: "Capuchino",
+      fr: "Capuchino",
+    },
+    price: 1.70,
+    descriptions: {
+      es: "Corto y aromático. Ingredientes: café arábica, agua.",
+      en: "Short & aromatic. Ingredients: arabica coffee, water.",
+      de: "Kurz & aromatisch. Zutaten: Arabica-Kaffee, Wasser.",
+      fr: "Court & aromatique. Ingrédients : café arabica, eau.",
+    },
+    image: IMG["drinks-coffee"],
+  },
   {
     id: slug("Cafe cortado"),
     category: "drinks-coffee",
@@ -1743,7 +1780,7 @@ export const DISHES: Dish[] = [
       de: "Rotwein (mittel)",
       fr: "Vin rouge (moyen)",
     },
-    price: 5.5,
+    price: 6.00,
     descriptions: {
       es: "Vino de la casa. Ingredientes: uva tinta.",
       en: "House red. Ingredients: red grapes.",
@@ -1781,7 +1818,7 @@ export const DISHES: Dish[] = [
       de: "Weißwein (mittel)",
       fr: "Vin blanc (moyen)",
     },
-    price: 5.5,
+    price: 6.00,
     descriptions: {
       es: "Vino de la casa. Ingredientes: uva blanca.",
       en: "House white. Ingredients: white grapes.",
@@ -1819,7 +1856,7 @@ export const DISHES: Dish[] = [
       de: "Süßwein (mittel)",
       fr: "Vin doux (moyen)",
     },
-    price: 5.5,
+    price: 6.00,
     descriptions: {
       es: "Dulce de la casa. Ingredientes: uva, azúcar residual.",
       en: "House sweet. Ingredients: grapes, residual sugar.",

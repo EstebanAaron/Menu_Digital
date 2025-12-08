@@ -462,7 +462,7 @@ export const DISHES: Dish[] = [
       de: "Ziegeneintopf",
       fr: "Ragoût de chèvre",
     },
-    price: 11.5,
+    price: 14.5,
     descriptions: {
       es: "Guiso tradicional. Ingredientes:Tacos de cabra, tomate, cebolla, pimiento,ajo, vino, laurel,tomillo,oregano,colorante alimentario.",
       en: "Traditional stew. Ingredients: goat meat chunks, tomato, onion, pepper, garlic, wine, bay leaf, thyme, oregano, food coloring.",

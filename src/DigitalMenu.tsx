@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, Globe } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { DISHES, CAT_COLORS, Category, Dish, Lang } from "./dishes";
+import { fetchPricesMap, applyPriceOverrides } from "./prices";
+import type { PricesMap } from "./prices";
 
 /**
  * DigitalMenu.tsx — secciones del menú
@@ -496,6 +498,26 @@ export default function DigitalMenu() {
     return "es";
   });
 
+  // --- precios dinámicos ---
+  const [pricesMap, setPricesMap] = useState<PricesMap>({});
+  const [pricesError, setPricesError] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const p = await fetchPricesMap();
+        if (alive) setPricesMap(p);
+      } catch (e) {
+        console.error(e);
+        if (alive) setPricesError(true);
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.localStorage.setItem("menu:lang", lang);
@@ -514,6 +536,12 @@ export default function DigitalMenu() {
     "drinks-liquor",
     "drinks-wine",
   ];
+
+  // --- precios aplicados ---
+  const DISHES_WITH_PRICES = useMemo(
+    () => applyPriceOverrides(DISHES, pricesMap),
+    [pricesMap]
+  );
 
   // ---------- Barra "sticky" ----------
   const sectionRefs = useRef<Partial<Record<Category, HTMLElement | null>>>({});
@@ -571,11 +599,11 @@ export default function DigitalMenu() {
   // orden y agrupado
   const dishesSorted = useMemo(
     () =>
-      [...DISHES].sort((a, b) => {
+      [...DISHES_WITH_PRICES].sort((a, b) => {
         if (a.category === b.category) return a.name.localeCompare(b.name);
         return order.indexOf(a.category) - order.indexOf(b.category);
       }),
-    []
+    [DISHES_WITH_PRICES]
   );
 
   const grouped = useMemo(() => {

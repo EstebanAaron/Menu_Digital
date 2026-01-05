@@ -532,12 +532,12 @@ export const DISHES: Dish[] = [
   {
     id: slug("Sancocho de gallina"),
     category: "main",
-    name: "Sancocho de gallina (domingos)",
+    name: "Sancocho de gallina (sábados)",
     i18nNames: {
-      es: "Sancocho de gallina (domingos)",
-      en: "Hen sancocho (Sundays)",
-      de: "Hühnersancocho (sonntags)",
-      fr: "Sancocho de poule (dimanches)",
+      es: "Sancocho de gallina (sábados)",
+      en: "Hen sancocho (Saturdays)",
+      de: "Hühnersancocho (samstags)",
+      fr: "Sancocho de poule (samedis)",
     },
     price: 17.0,
     descriptions: {
@@ -551,12 +551,12 @@ export const DISHES: Dish[] = [
   {
     id: slug("Sancocho trifasico"),
     category: "main",
-    name: "Sancocho trifásico (sábados)",
+    name: "Sancocho trifásico (domingos)",
     i18nNames: {
-      es: "Sancocho trifásico (sábados)",
-      en: "Trifásico sancocho (Saturdays)",
-      de: "Dreifacher Sancocho (samstags)",
-      fr: "Sancocho « trifásico » (samedis)",
+      es: "Sancocho trifásico (domingos)",
+      en: "Trifásico sancocho (Sundays)",
+      de: "Dreifacher Sancocho (sonntags)",
+      fr: "Sancocho « trifásico » (dimanches)",
     },
     price: 19.90,
     descriptions: {
@@ -570,12 +570,12 @@ export const DISHES: Dish[] = [
   {
     id: slug("Sancocho de costilla"),
     category: "main",
-    name: "Sancocho de costilla",
+    name: "Sancocho de costilla(miercoles a viernes)",
     i18nNames: {
-      es: "Sancocho de costilla",
-      en: "Rib sancocho",
-      de: "Sancocho mit Rippchen",
-      fr: "Sancocho de côtes",
+      es: "Sancocho de costilla(miercoles a viernes)",
+      en: "Rib sancocho(Wednesdays to Fridays)",
+      de: "Sancocho mit Rippchen(mittwochs bis freitags)",
+      fr: "Sancocho de côtes(mercredi au vendredi)",
     },
     price: 17.00,
     descriptions: {
